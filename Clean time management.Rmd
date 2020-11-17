@@ -6,6 +6,7 @@ output: html_document
 ---
 
 ```{r}
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 library(dplyr)
 library(rcompanion)
 library(tidyverse)
@@ -14,6 +15,7 @@ library(clustMixType)
 library(arules)
 library(arulesViz)
 library(plotly)
+library(car)
 library(abind)
 #test
 #test
