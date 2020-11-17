@@ -16,6 +16,8 @@ library(arules)
 library(arulesViz)
 library(plotly)
 library(car)
+library(abind)
+library(timeDate)
 ```
 
 ```{r}
