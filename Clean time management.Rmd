@@ -23,12 +23,15 @@ data <- read.csv("International students Time management data.csv")
 ```{r}
 head(data)
 ```
+
+```{r}
+#Remove Variable (Menurut gebe ga perlu tapi bisa dirubah)
+  data <- data %>%
+    select(-c(Number,Nationality,Program,Course,English,Academic,Attendance))
+```
+
 ```{r}
 clean <- function(x){
-  
-  #Remove Variable (Menurut gebe ga perlu tapi bisa dirubah)
-  x <- x %>%
-    select(-c(Number,Nationality,Program,Course,English,Academic,Attendance))
   
   #Kurangin faktor levels biar quntity nya lebih seimbang
   x$Age <- ifelse(x$Age == "26-30" | x$Age == ">36" | x$Age == "31-35", ">25",x$Age)
@@ -91,12 +94,13 @@ clean <- function(x){
 ```
 
 ```{r}
-data1 <- clean(data)
+data <- clean(data)
 ```
 
 ```{r}
 head(data)
 ```
+
 ```{r}
 data_ques <- data %>%
   select(c(15:27))
@@ -113,10 +117,6 @@ ggcorr(data_ques,label = TRUE, label_size = 2)
 
 ggplot(data, aes(x=score))+
   geom_histogram(col="lightblue")
-
-ggplot(data1, aes(x=score))+
-  geom_histogram(col="lightblue")
-             
 ```
 
 ```{r}
@@ -162,12 +162,34 @@ plot(k.values, wss_values,
 Pakai elbow method untuk menentukan number of cluster
 
 ```{r}
+set.seed(100)
 model_clus <- kproto(data_kmean,3)
+
+model_clus$cluster
 ```
 
 ```{r}
 a <- c("21-25", "F", "Strong Agree","Agree","Neither", "Agree","Strong Disagree", "Disagree","Neither","Neither","Agree","Agree","Disagree","Disagree")
-names(a) <- c("Age","Gender","X6","X7","X8","X9","X10","X11","X12","X13","X14","X15","X16","X17")
+
+a <- data.frame(a)
+
+a <- data.frame(t(a))
+
+colnames(a) <- c("Age","Gender","X6","X7","X8","X9","X10","X11","X12","X13","X14","X15","X16","X17")
+
+a <- clean(a)
+
+a <- rbind(data[125,],a)
+
+a_kmean <- a %>%
+  select(-c(15:26))
+
+data2 <- rbind(data,a)
+```
+
+```{r}
+set.seed(100)
+test <- predict(model_clus,a_kmean)
 ```
 
 ```{r}
@@ -176,10 +198,14 @@ cluster <- as.factor(cluster)
 ```
 
 ```{r}
-a <- ggplot(data , aes(x=Age,y=score))+
-  geom_point(aes(col=cluster))
+a <- ggplot(data2 , aes(x=Age,y=score))+
+  geom_point(aes(col=cluster))+ 
+  scale_x_continuous()
 
 ggplotly(a)
+
+
+sbdhjajhsdjhabd
 ```
 
 # Association rules
