@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 Order,Questions,Option & scores,,,,
 ,,Strong agree,Agree,Neither Agree or Disagree,Disagree,Strong disagree
 6,"You often feel that your life is aimless, with no definite purpose",1,2,3,4,5
@@ -12,3 +13,19 @@ Order,Questions,Option & scores,,,,
 15,You are easy to get bored with your day-today activities.,1,2,3,4,5
 16,The important interests/activities in your life tend to change frequently.,1,2,3,4,5
 17,You know how much time you spend on each of the homework I do.,5,4,3,2,1
+=======
+Order,Questions,Option & scores,,,,
+,,Strong agree,Agree,Neither Agree or Disagree,Disagree,Strong disagree
+6,"You often feel that your life is aimless, with no definite purpose",1,2,3,4,5
+7,You never have trouble organizing the things you have to do?,5,4,3,2,1
+8,"Once you've started an activity, you persist at it until you've completed it",5,4,3,2,1
+9,Sometimes you feel that the things you have to do during the day just don't seem to matter,1,2,3,4,5
+10,You will plan your activities from day to day.,5,4,3,2,1
+11,You tend to leave things to the last minute?,1,2,3,4,5
+12,You tend to change rather aimlessly from one activity to another during the day.,1,2,3,4,5
+13,You give up the things that you planning to do just because your friend says no.,1,2,3,4,5
+14,You think you do enough with your time.,5,4,3,2,1
+15,You are easy to get bored with your day-today activities.,1,2,3,4,5
+16,The important interests/activities in your life tend to change frequently.,1,2,3,4,5
+17,You know how much time you spend on each of the homework I do.,5,4,3,2,1
+>>>>>>> 5e6e00c754ec7a29c9fae5c91d85ffbacc5865a6
