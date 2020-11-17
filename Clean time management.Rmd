@@ -1,0 +1,172 @@
+---
+title: "time management"
+author: "Gerald Bryan"
+date: "13/11/2020"
+output: html_document
+---
+
+```{r}
+library(dplyr)
+library(rcompanion)
+library(tidyverse)
+library(GGally)
+library(clustMixType)
+library(arules)
+library(arulesViz)
+library(plotly)
+```
+
+```{r}
+data <- read.csv("International students Time management data.csv")
+```
+
+```{r}
+head(data)
+```
+
+```{r}
+# Menurut gebe variable" ini ga perlu
+
+data <- data %>%
+  select(-c(Number,Nationality,Program,Course,English,Academic,Attendance))
+```
+
+```{r}
+data$Age <- ifelse(data$Age == "26-30" | data$Age == ">36" | data$Age == "31-35", ">25",data$Age)
+data$Age <- ifelse(data$Age == "<18", "18-20",data$Age)
+
+data$Age<- ordered(data$Age, levels=c("18-20","21-25",">25"))
+```
+
+```{r}
+data$X6 <- ifelse(data$X6=="","Neither",data$X6)
+data$X8 <- ifelse(data$X8=="","Neither",data$X8)
+data$X9 <- ifelse(data$X9=="","Neither",data$X9)
+data$X10 <- ifelse(data$X10=="","Neither",data$X10)
+data$X11 <- ifelse(data$X11=="","Neither",data$X11)
+data$X12 <- ifelse(data$X12=="","Neither",data$X12)
+data$X14 <- ifelse(data$X14=="","Neither",data$X14)
+data$X16 <- ifelse(data$X16=="","Neither",data$X16)
+data$X17 <- ifelse(data$X17=="","Neither",data$X17)
+```
+
+```{r}
+data$X6_num <- ifelse(data$X6=="Strong Agree",1,ifelse(data$X6=="Agree",2,ifelse(data$X6=="Neither",3,ifelse(data$X6=="Disagree",4,5))))
+data$X7_num <- ifelse(data$X7=="Strong Agree",5,ifelse(data$X7=="Agree",4,ifelse(data$X7=="Neither",3,ifelse(data$X7=="Disagree",2,1))))
+data$X8_num <- ifelse(data$X8=="Strong Agree",5,ifelse(data$X8=="Agree",4,ifelse(data$X8=="Neither",3,ifelse(data$X8=="Disagree",2,1))))
+data$X9_num <- ifelse(data$X9=="Strong Agree",1,ifelse(data$X9=="Agree",2,ifelse(data$X9=="Neither",3,ifelse(data$X9=="Disagree",4,5))))
+data$X10_num <- ifelse(data$X10=="Strong Agree",5,ifelse(data$X10=="Agree",4,ifelse(data$X10=="Neither",3,ifelse(data$X10=="Disagree",2,1))))
+data$X11_num <- ifelse(data$X11=="Strong Agree",1,ifelse(data$X11=="Agree",2,ifelse(data$X11=="Neither",3,ifelse(data$X11=="Disagree",4,5))))
+data$X12_num <- ifelse(data$X12=="Strong Agree",1,ifelse(data$X12=="Agree",2,ifelse(data$X12=="Neither",3,ifelse(data$X12=="Disagree",4,5))))
+data$X13_num <- ifelse(data$X13=="Strong Agree",1,ifelse(data$X13=="Agree",2,ifelse(data$X13=="Neither",3,ifelse(data$X13=="Disagree",4,5))))
+data$X14_num <- ifelse(data$X14=="Strong Agree",5,ifelse(data$X14=="Agree",4,ifelse(data$X14=="Neither",3,ifelse(data$X14=="Disagree",2,1))))
+data$X15_num <- ifelse(data$X15=="Strong Agree",1,ifelse(data$X15=="Agree",2,ifelse(data$X15=="Neither",3,ifelse(data$X15=="Disagree",4,5))))
+data$X16_num <- ifelse(data$X16=="Strong Agree",1,ifelse(data$X16=="Agree",2,ifelse(data$X16=="Neither",3,ifelse(data$X16=="Disagree",4,5))))
+data$X17_num <- ifelse(data$X17=="Strong Agree",5,ifelse(data$X17=="Agree",4,ifelse(data$X17=="Neither",3,ifelse(data$X17=="Disagree",2,1))))
+
+data$score <- data$X6_num +data$X7_num +data$X8_num + data$X9_num + data$X10_num + data$X11_num +data$X12_num + data$X13_num +data$X14_num +data$X15_num + data$X16_num +data$X17_num
+```
+```{r}
+data <- data %>%
+  mutate_if(is.character,as.factor)
+```
+
+```{r}
+head(data)
+```
+```{r}
+data_ques <- data %>%
+  select(c(15:27))
+
+colnames(data_ques) <- c("X6","X7","X8","X9","X10","X11","X12","X13","X14","X15","X16","X17","Score")
+
+# ngga yakin boleh
+cor(data_ques)
+ggcorr(data_ques,label = TRUE, label_size = 2)
+```
+
+```{r}
+#Score distribution
+
+ggplot(data, aes(x=score))+
+  geom_histogram(col="lightblue")
+             
+```
+
+```{r}
+ggplot(data, aes(x = Age)) +
+  geom_bar(aes(x=Age,fill=Gender),position = "dodge")
+```
+
+```{r}
+ggplot(data,aes(x=Age,y=score))+
+  geom_boxplot(aes(fill=Gender))
+```
+
+#k-means
+
+```{r}
+data_kmean <- data %>%
+  select(-c(15:26))
+
+score <- data %>%
+  select(27)
+```
+
+```{r, echo=FALSE,results='hide'}
+set.seed(100)
+wss <- function(k) {
+  kproto(data_kmean, k)$tot.withinss
+}
+
+# Compute and plot wss for k = 1 to k = 15
+k.values <- 1:15
+
+# extract wss for 2-15 clusters
+wss_values <- map_dbl(k.values, wss)
+```
+
+```{r, echo=FALSE}
+plot(k.values, wss_values,
+       type="b", pch = 19, frame = FALSE, 
+       xlab="Number of clusters K",
+       ylab="Total within-clusters sum of squares")
+```
+
+Pakai elbow method untuk menentukan number of cluster
+
+```{r}
+model_clus <- kproto(data_kmean,3)
+```
+
+```{r}
+model_clus$cluster <- as.factor(model_clus$cluster)
+```
+
+```{r}
+a <- ggplot(data , aes(x=Age,y=score))+
+  geom_point(aes(col=model_clus$cluster))
+
+ggplotly(a)
+```
+
+# Association rules
+
+```{r}
+data_arules <- data %>% 
+  select(1:14)
+```
+
+```{r}
+mba <- apriori(data_arules, parameter = list(sup = 0.1, conf = 0.8, target="rules",minlen=3,maxlen=4))
+```
+
+```{r}
+inspect(head(sort(mba, by="lift"),10))
+```
+
+```{r}
+git remote add origin https://github.com/geraldbryan/Time-Management-Project.git
+git push -u origin master
+```
+
