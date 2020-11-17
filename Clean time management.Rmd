@@ -5,7 +5,15 @@ date: "13/11/2020"
 output: html_document
 ---
 
+<<<<<<< HEAD
 ```{r, message=FALSE}
+=======
+```{r}
+
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+bbbbbbb
+
+>>>>>>> 12a1302a3dd817dad5f89de4bcfb2048eff5d971
 library(dplyr)
 library(rcompanion)
 library(tidyverse)
@@ -14,6 +22,23 @@ library(clustMixType)
 library(arules)
 library(arulesViz)
 library(plotly)
+<<<<<<< HEAD
+=======
+library(abind)
+
+library(timeDate)
+
+#testtt 
+#testtt
+
+#test
+#test
+
+ijdjfsdfsnjnvsjvndjfvnjdfnv
+
+
+
+>>>>>>> 12a1302a3dd817dad5f89de4bcfb2048eff5d971
 ```
 
 ```{r}
@@ -235,9 +260,6 @@ a <- ggplot(data2 , aes(x=Age,y=score))+
   scale_x_continuous()
 
 ggplotly(a)
-
-
-sbdhjajhsdjhabd
 ```
 
 # Association rules
