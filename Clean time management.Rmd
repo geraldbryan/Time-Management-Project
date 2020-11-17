@@ -6,6 +6,10 @@ output: html_document
 ---
 
 ```{r}
+
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+bbbbbbb
+
 library(dplyr)
 library(rcompanion)
 library(tidyverse)
@@ -15,10 +19,19 @@ library(arules)
 library(arulesViz)
 library(plotly)
 library(abind)
+
 library(timeDate)
 
 #testtt 
 #testtt
+
+#test
+#test
+
+ijdjfsdfsnjnvsjvndjfvnjdfnv
+
+
+
 ```
 
 ```{r}
