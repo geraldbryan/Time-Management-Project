@@ -5,15 +5,7 @@ date: "13/11/2020"
 output: html_document
 ---
 
-<<<<<<< HEAD
 ```{r, message=FALSE}
-=======
-```{r}
-
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-bbbbbbb
-
->>>>>>> 12a1302a3dd817dad5f89de4bcfb2048eff5d971
 library(dplyr)
 library(rcompanion)
 library(tidyverse)
@@ -22,23 +14,22 @@ library(clustMixType)
 library(arules)
 library(arulesViz)
 library(plotly)
-<<<<<<< HEAD
-=======
 library(abind)
-
 library(timeDate)
 
-#testtt 
-#testtt
-
-#test
-#test
-
-ijdjfsdfsnjnvsjvndjfvnjdfnv
-
-
-
->>>>>>> 12a1302a3dd817dad5f89de4bcfb2048eff5d971
+#Algoritma plot theme
+theme_algo <- theme(legend.key = element_rect(fill="black"),
+           legend.background = element_rect(color="white", fill="#263238"),
+           plot.subtitle = element_text(size=6, color="white"),
+           panel.background = element_rect(fill="#dddddd"),
+           panel.border = element_rect(fill=NA),
+           panel.grid.minor.x = element_blank(),
+           panel.grid.major.x = element_blank(),
+           panel.grid.major.y = element_line(color="darkgrey", linetype=2),
+           panel.grid.minor.y = element_blank(),
+           plot.background = element_rect(fill="#263238"),
+           text = element_text(color="white"),
+           axis.text = element_text(color="white"))
 ```
 
 ```{r}
@@ -173,30 +164,35 @@ ggcorr(data_ques,label = TRUE, label_size = 2)
 ```{r}
 #Score distribution
 ggplot(data, aes(x=score))+
-  geom_histogram(col="lightblue")
+  geom_histogram(col="lightblue")+
+  theme_algo
 ```
 
 ```{r}
 ggplot(data, aes(x = Age)) +
-  geom_bar(aes(x=Age,fill=Gender),position = "dodge")
+  geom_bar(aes(x=Age,fill=Gender),position = "dodge")+
+  theme_algo
 ```
 
 ```{r}
 ggplot(data,aes(x=Age,y=score))+
-  geom_boxplot(aes(fill=Gender))
+  geom_boxplot(aes(fill=Gender))+
+  theme_algo
 ```
 
-# K-Means
+# K-Means (Clustering)
 
 ```{r}
 data_kmean <- data %>%
   select(-c(15:26))
-
-score <- data %>%
-  select(27)
 ```
 
 ```{r, echo=FALSE,results='hide'}
+
+```
+
+```{r, echo=FALSE}
+#Determine the number of clustering (See the last point befor linear line)
 set.seed(100)
 wss <- function(k) {
   kproto(data_kmean, k)$tot.withinss
@@ -207,9 +203,7 @@ k.values <- 1:15
 
 # extract wss for 2-15 clusters
 wss_values <- map_dbl(k.values, wss)
-```
 
-```{r, echo=FALSE}
 plot(k.values, wss_values,
        type="b", pch = 19, frame = FALSE, 
        xlab="Number of clusters K",
@@ -219,15 +213,18 @@ plot(k.values, wss_values,
 Pakai elbow method untuk menentukan number of cluster
 
 ```{r}
-set.seed(100)
+#Clustering Model
+set.seed(100) # biar ga brubah2 clusteringnya
 model_clus <- kproto(data_kmean,3)
-
-model_clus$cluster
 ```
 
 ```{r}
+#Input new data di shiny
 a <- c("21-25", "F", "Strong Agree","Agree","Neither", "Agree","Strong Disagree", "Disagree","Neither","Neither","Agree","Agree","Disagree","Disagree")
+```
 
+```{r}
+#New data pre-processing
 a <- data.frame(a)
 
 a <- data.frame(t(a))
@@ -236,12 +233,11 @@ colnames(a) <- c("Age","Gender","X6","X7","X8","X9","X10","X11","X12","X13","X14
 
 a <- clean(a)
 
+#use last ori data, becasuse to use kproto model must have min 2 data
 a <- rbind(data[125,],a)
 
 a_kmean <- a %>%
   select(-c(15:26))
-
-data2 <- rbind(data,a)
 ```
 
 ```{r}
@@ -250,16 +246,32 @@ test <- predict(model_clus,a_kmean)
 ```
 
 ```{r}
+#Select the clustering result
 cluster <- append(model_clus$cluster,test$cluster)
 cluster <- as.factor(cluster)
+
+#Make a new data frame from original data + input data
+data2 <- rbind(data,a)
+
+#Column bind data 2 + cluster result
+data_clus <- cbind(data2,cluster)
+
+#A new data frame only the 'input data' for visualization needs
+data_new <- data_clus[127,]
 ```
 
 ```{r}
-a <- ggplot(data2 , aes(x=Age,y=score))+
-  geom_point(aes(col=cluster))+ 
-  scale_x_continuous()
+#For not overlaping
+jitter <- position_jitter(width = 0.1, height = 0.1)
 
-ggplotly(a)
+#plot clustering
+ggplot(NULL,aes(x=Age,y=score))+
+  geom_point(data=data_clus , aes(col=cluster), position = jitter)+
+  geom_jitter(data = data_new,aes(col=cluster,fill=cluster), shape=23,size=5)+
+  theme(legend.position = "bottom")+
+  guides(fill=FALSE)+
+  scale_colour_manual(name="Cluster",labels=c("Bad", "Good","Normal"),values=c("red","dark green", "gold"))+
+  theme_algo
 ```
 
 # Association rules
