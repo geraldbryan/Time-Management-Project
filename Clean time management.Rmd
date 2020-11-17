@@ -7,6 +7,7 @@ output: html_document
 
 ```{r}
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+bbbbbbb
 library(dplyr)
 library(rcompanion)
 library(tidyverse)
@@ -19,6 +20,7 @@ library(car)
 library(abind)
 #test
 #test
+
 ```
 
 ```{r}
