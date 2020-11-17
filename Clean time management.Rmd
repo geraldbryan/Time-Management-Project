@@ -14,7 +14,6 @@ library(clustMixType)
 library(arules)
 library(arulesViz)
 library(plotly)
-library(knitr)
 ```
 
 ```{r}
