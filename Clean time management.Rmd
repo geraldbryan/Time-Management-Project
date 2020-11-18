@@ -247,7 +247,7 @@ k.values <- 1:10
 ```
 
 
-```{r, message=FALSE}
+```{r, message=FALSE, include=FALSE}
 # Extract the wss for 2-10 clusters
 wss_values <- map_dbl(k.values, wss)
 ```
