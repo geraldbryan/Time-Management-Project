@@ -1,0 +1,342 @@
+---
+title: "time management"
+author: "Gerald Bryan"
+date: "13/11/2020"
+output: html_document
+---
+
+```{r, message=FALSE}
+library(dplyr)
+library(rcompanion)
+library(tidyverse)
+library(GGally)
+library(clustMixType)
+library(arules)
+library(arulesViz)
+library(plotly)
+library(abind)
+library(timeDate)
+library(rvest)
+
+#Algoritma plot theme
+theme_algo <- theme(legend.key = element_rect(fill="black"),
+           legend.background = element_rect(color="white", fill="#263238"),
+           plot.subtitle = element_text(size=6, color="white"),
+           panel.background = element_rect(fill="#dddddd"),
+           panel.border = element_rect(fill=NA),
+           panel.grid.minor.x = element_blank(),
+           panel.grid.major.x = element_blank(),
+           panel.grid.major.y = element_line(color="darkgrey", linetype=2),
+           panel.grid.minor.y = element_blank(),
+           plot.background = element_rect(fill="#263238"),
+           text = element_text(color="white"),
+           axis.text = element_text(color="white"))
+```
+
+```{r}
+data <- read.csv("International students Time management data.csv")
+```
+
+```{r}
+# checking the data
+head(data)
+```
+
+```{r}
+# Subset the relevant data
+data <- data %>%
+    select(-c(Number,Nationality,Program,Course,
+              English,Academic,Attendance))
+```
+
+```{r}
+# construct the 'clean' function
+clean <- function(x){
+  # Reduce factor levels
+  x$Age <- ifelse(x$Age == "26-30" | x$Age == ">36" | x$Age == "31-35", ">25",x$Age)
+  x$Age <- ifelse(x$Age == "<18", "18-20",x$Age)
+  x$Age<- ordered(x$Age, levels=c("18-20","21-25",">25"))
+  #Buat " " di jawaban pertanyaan jadi neither
+  x$X6 <- ifelse(x$X6=="","Neither",x$X6)
+  x$X8 <- ifelse(x$X8=="","Neither",x$X8)
+  x$X9 <- ifelse(x$X9=="","Neither",x$X9)
+  x$X10 <- ifelse(x$X10=="","Neither",x$X10)
+  x$X11 <- ifelse(x$X11=="","Neither",x$X11)
+  x$X12 <- ifelse(x$X12=="","Neither",x$X12)
+  x$X14 <- ifelse(x$X14=="","Neither",x$X14)
+  x$X16 <- ifelse(x$X16=="","Neither",x$X16)
+  x$X17 <- ifelse(x$X17=="","Neither",x$X17)
+  
+  #Ubah hasil question jadi scor, nilai di sheet2
+  x$X6_num <- ifelse(x$X6=="Strong Agree",1,
+                     ifelse(x$X6=="Agree",2,
+                            ifelse(x$X6=="Neither",3,
+                                   ifelse(x$X6=="Disagree",4,5))))
+
+  x$X7_num <- ifelse(x$X7=="Strong Agree",5,
+                     ifelse(x$X7=="Agree",4,
+                            ifelse(x$X7=="Neither",3,
+                                   ifelse(x$X7=="Disagree",2,1))))
+
+  x$X8_num <- ifelse(x$X8=="Strong Agree",5,
+                     ifelse(x$X8=="Agree",4,
+                            ifelse(x$X8=="Neither",3,
+                                   ifelse(x$X8=="Disagree",2,1))))
+
+  x$X9_num <- ifelse(x$X9=="Strong Agree",1,
+                     ifelse(x$X9=="Agree",2,
+                            ifelse(x$X9=="Neither",3,
+                                   ifelse(x$X9=="Disagree",4,5))))
+
+  x$X10_num <- ifelse(x$X10=="Strong Agree",5,
+                      ifelse(x$X10=="Agree",4,
+                             ifelse(x$X10=="Neither",3,
+                                    ifelse(x$X10=="Disagree",2,1))))
+
+  x$X11_num <- ifelse(x$X11=="Strong Agree",1,
+                      ifelse(x$X11=="Agree",2,
+                             ifelse(x$X11=="Neither",3,
+                                    ifelse(x$X11=="Disagree",4,5))))
+
+  x$X12_num <- ifelse(x$X12=="Strong Agree",1,
+                      ifelse(x$X12=="Agree",2,
+                             ifelse(x$X12=="Neither",3,
+                                    ifelse(x$X12=="Disagree",4,5))))
+
+  x$X13_num <- ifelse(x$X13=="Strong Agree",1,
+                      ifelse(x$X13=="Agree",2,
+                             ifelse(x$X13=="Neither",3,
+                                    ifelse(x$X13=="Disagree",4,5))))
+
+  x$X14_num <- ifelse(x$X14=="Strong Agree",5,
+                      ifelse(x$X14=="Agree",4,
+                             ifelse(x$X14=="Neither",3,
+                                    ifelse(x$X14=="Disagree",2,1))))
+
+  x$X15_num <- ifelse(x$X15=="Strong Agree",1,
+                      ifelse(x$X15=="Agree",2,
+                             ifelse(x$X15=="Neither",3,
+                                    ifelse(x$X15=="Disagree",4,5))))
+
+  x$X16_num <- ifelse(x$X16=="Strong Agree",1,
+                      ifelse(x$X16=="Agree",2,
+                             ifelse(x$X16=="Neither",3,
+                                    ifelse(x$X16=="Disagree",4,5))))
+
+  x$X17_num <- ifelse(x$X17=="Strong Agree",5,
+                      ifelse(x$X17=="Agree",4,
+                             ifelse(x$X17=="Neither",3,
+                                    ifelse(x$X17=="Disagree",2,1))))
+
+  #Hitung total Score
+  x$score <- x$X6_num + x$X7_num + x$X8_num + x$X9_num + 
+    x$X10_num + x$X11_num +x$X12_num + x$X13_num +
+    x$X14_num +x$X15_num + x$X16_num +x$X17_num
+  
+  #Ubah charachter jadi factor
+  x <- x %>%
+  mutate_if(is.character,as.factor)
+}
+```
+
+```{r}
+# apply the function into the data
+data <- clean(data)
+```
+
+```{r}
+# check the data
+head(data)
+```
+
+```{r}
+data_ques <- data %>%
+  select(c(15:27))
+
+colnames(data_ques) <- c("X6","X7","X8","X9","X10",
+                         "X11","X12","X13","X14","X15",
+                         "X16","X17","Score")
+
+# ngga yakin boleh
+cor(data_ques)
+ggcorr(data_ques,label = TRUE, label_size = 2)
+```
+
+```{r}
+#Score distribution
+ggplot(data, aes(x=score))+
+  geom_histogram(col="lightblue")+
+  theme_algo
+```
+
+```{r}
+ggplot(data, aes(x = Age)) +
+  geom_bar(aes(x=Age,fill=Gender),position = "dodge")+
+  theme_algo
+```
+
+```{r}
+ggplot(data,aes(x=Age,y=score))+
+  geom_boxplot(aes(fill=Gender))+
+  theme_algo
+```
+
+# K-Means (Clustering)
+
+```{r}
+data_kmean <- data %>%
+  select(-c(15:26))
+```
+
+```{r, echo=FALSE}
+#Determine the number of clustering use "elbow method"(See the last point befor linear line)
+set.seed(100)
+wss <- function(k) {
+  kproto(data_kmean, k)$tot.withinss
+}
+
+# Compute and plot wss for k = 1 to k = 15
+k.values <- 1:15
+
+# extract wss for 2-15 clusters
+wss_values <- map_dbl(k.values, wss)
+
+plot(k.values, wss_values,
+       type="b", pch = 19, frame = FALSE, 
+       xlab="Number of clusters K",
+       ylab="Total within-clusters sum of squares")
+```
+
+```{r}
+#Clustering Model
+set.seed(100) # biar ga brubah2 clusteringnya
+model_clus <- kproto(data_kmean,3)
+```
+
+```{r}
+#Input new data di shiny (Datanya jadi data input di shiny)
+a <- c("21-25", "F", "Strong Agree","Strong Disagree","Strong Disagree", "Strong Agree","Strong Disagree", "Strong Agree","Strong Agree","Strong Agree","Disagree","Strong Disagree","Strong Disagree","Strong Disagree")
+```
+
+```{r}
+#New data pre-processing
+a <- data.frame(a)
+
+a <- data.frame(t(a))
+
+colnames(a) <- c("Age","Gender","X6","X7","X8","X9","X10","X11","X12","X13","X14","X15","X16","X17")
+
+a <- clean(a)
+
+#use last ori data, becasuse to use kproto model must have min 2 data
+a <- rbind(data[125,],a)
+
+a_kmean <- a %>%
+  select(-c(15:26))
+```
+
+```{r}
+set.seed(100)
+test <- predict(model_clus,a_kmean)
+```
+
+```{r}
+#Select the clustering result
+cluster <- append(model_clus$cluster,test$cluster)
+cluster <- as.factor(cluster)
+
+#Make a new data frame from original data + input data
+data2 <- rbind(data,a)
+
+#Column bind data 2 + cluster result
+data_clus <- cbind(data2,cluster)
+
+#A new data frame only the 'input data' for visualization needs
+data_new <- data_clus[127,]
+```
+
+```{r}
+#For not overlaping
+set.seed(100)
+jitter <- position_jitter(width = 0.1, height = 0.1)
+
+#plot clustering original
+ggplot(NULL,aes(x=Age,y=score))+
+  geom_point(data=data_kmean , aes(col=as.factor(model_clus$cluster)), position = jitter)+
+  theme(legend.position = "bottom")+
+  guides(fill=FALSE)+
+  scale_colour_manual(name="Cluster",labels=c("Bad", "Good","Normal"),values=c("red","dark green", "gold"))+
+  theme_algo
+```
+
+```{r}
+#Boxplot of cluster and score (Bisa dimasukkin kalau perlu)
+boxplot_cluster <- ggplot(data_kmean,aes(x=as.factor(model_clus$cluster),y=score))+
+  geom_boxplot()
+ggplotly(boxplot_cluster)
+```
+```{r}
+#plot clustering with new data
+ggplot(NULL,aes(x=Age,y=score))+
+  geom_point(data=data_clus , aes(col=cluster), position = jitter)+
+  geom_jitter(data = data_new,aes(col=cluster), shape=8,size=3,stroke=2)+
+  theme(legend.position = "none")+
+  guides(fill=FALSE)+
+  scale_colour_manual(name="Cluster",labels=c("Bad", "Good","Normal"),values=c("red","dark green", "gold"))+
+  theme_algo
+```
+
+# Association rules
+
+```{r}
+#Take only the Question &cluster
+data_arules <- data_clus %>% 
+  select(c(3:14,28))
+
+data_arules$cluster <- ifelse(data_arules$cluster==1,"Bad",ifelse(data_arules$cluster==2,"Good","Normal"))
+```
+
+## Bad time managemet
+```{r}
+mba_bad <- apriori(data_arules, parameter = list(sup = 0.05, conf = 0.5, target="rules",minlen=3,maxlen=4),appearance = list(rhs= "cluster=Bad", default = "lhs"))
+```
+
+```{r}
+inspect(head(sort(mba_bad, by="lift"),10))[,c(1:5,7)]
+```
+
+```{r}
+plot(head(sort(mba_bad,by="lift"),10),method="graph",)
+```
+
+## Good Time Management
+
+```{r}
+mba_good <- apriori(data_arules, parameter = list(sup = 0.05, conf = 0.5, target="rules",minlen=3,maxlen=4),appearance = list(rhs= "cluster=Good", default = "lhs"))
+```
+
+```{r}
+inspect(head(sort(mba_good, by="lift"),10))[,c(1:5,7)]
+```
+
+```{r}
+plot(head(sort(mba_good,by="lift"),10),method="graph",control=list(layout=igraph::in_circle()))
+```
+
+# Scrape for time management tips
+
+```{r}
+link <- paste0("https://quickbooks.intuit.com/r/employee-management/time-management-tips/#:~:text=If%20you%20want%20to%20improve%20your%20time%20management,compare%20actual%20time%20spent%20and%20estimated%20time%20spent.")
+pages <- read_html(link)
+```
+
+```{r}
+Tips <- pages %>% 
+      html_nodes(".body-article .content-article h2") %>%
+      html_text()
+Tips <- Tips[3:27]
+
+#"or for more info you can clik [here](https://quickbooks.intuit.com/r/employee-management/time-management-tips/#:~:text=If%20you%20want%20to%20improve%20your%20time%20management,compare%20actual%20time%20spent%20and%20estimated%20time%20spent.)" #nanti dicantumin authornya sama linknya kita ambil tips)
+```
+
+
