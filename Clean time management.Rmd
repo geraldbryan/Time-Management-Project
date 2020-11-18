@@ -16,6 +16,7 @@ library(arulesViz)
 library(plotly)
 library(abind)
 library(timeDate)
+library(rvest)
 
 #Algoritma plot theme
 theme_algo <- theme(legend.key = element_rect(fill="black"),
@@ -187,12 +188,8 @@ data_kmean <- data %>%
   select(-c(15:26))
 ```
 
-```{r, echo=FALSE,results='hide'}
-
-```
-
 ```{r, echo=FALSE}
-#Determine the number of clustering (See the last point befor linear line)
+#Determine the number of clustering use "elbow method"(See the last point befor linear line)
 set.seed(100)
 wss <- function(k) {
   kproto(data_kmean, k)$tot.withinss
@@ -210,8 +207,6 @@ plot(k.values, wss_values,
        ylab="Total within-clusters sum of squares")
 ```
 
-Pakai elbow method untuk menentukan number of cluster
-
 ```{r}
 #Clustering Model
 set.seed(100) # biar ga brubah2 clusteringnya
@@ -219,8 +214,8 @@ model_clus <- kproto(data_kmean,3)
 ```
 
 ```{r}
-#Input new data di shiny
-a <- c("21-25", "F", "Strong Agree","Agree","Neither", "Agree","Strong Disagree", "Disagree","Neither","Neither","Agree","Agree","Disagree","Disagree")
+#Input new data di shiny (Datanya jadi data input di shiny)
+a <- c("21-25", "F", "Strong Agree","Strong Disagree","Strong Disagree", "Strong Agree","Strong Disagree", "Strong Agree","Strong Agree","Strong Agree","Disagree","Strong Disagree","Strong Disagree","Strong Disagree")
 ```
 
 ```{r}
@@ -262,13 +257,30 @@ data_new <- data_clus[127,]
 
 ```{r}
 #For not overlaping
+set.seed(100)
 jitter <- position_jitter(width = 0.1, height = 0.1)
 
-#plot clustering
+#plot clustering original
+ggplot(NULL,aes(x=Age,y=score))+
+  geom_point(data=data_kmean , aes(col=as.factor(model_clus$cluster)), position = jitter)+
+  theme(legend.position = "bottom")+
+  guides(fill=FALSE)+
+  scale_colour_manual(name="Cluster",labels=c("Bad", "Good","Normal"),values=c("red","dark green", "gold"))+
+  theme_algo
+```
+
+```{r}
+#Boxplot of cluster and score (Bisa dimasukkin kalau perlu)
+boxplot_cluster <- ggplot(data_kmean,aes(x=as.factor(model_clus$cluster),y=score))+
+  geom_boxplot()
+ggplotly(boxplot_cluster)
+```
+```{r}
+#plot clustering with new data
 ggplot(NULL,aes(x=Age,y=score))+
   geom_point(data=data_clus , aes(col=cluster), position = jitter)+
-  geom_jitter(data = data_new,aes(col=cluster,fill=cluster), shape=23,size=5)+
-  theme(legend.position = "bottom")+
+  geom_jitter(data = data_new,aes(col=cluster), shape=8,size=3,stroke=2)+
+  theme(legend.position = "none")+
   guides(fill=FALSE)+
   scale_colour_manual(name="Cluster",labels=c("Bad", "Good","Normal"),values=c("red","dark green", "gold"))+
   theme_algo
@@ -277,15 +289,54 @@ ggplot(NULL,aes(x=Age,y=score))+
 # Association rules
 
 ```{r}
-data_arules <- data %>% 
-  select(1:14)
+#Take only the Question &cluster
+data_arules <- data_clus %>% 
+  select(c(3:14,28))
+
+data_arules$cluster <- ifelse(data_arules$cluster==1,"Bad",ifelse(data_arules$cluster==2,"Good","Normal"))
+```
+
+## Bad time managemet
+```{r}
+mba_bad <- apriori(data_arules, parameter = list(sup = 0.05, conf = 0.5, target="rules",minlen=3,maxlen=4),appearance = list(rhs= "cluster=Bad", default = "lhs"))
 ```
 
 ```{r}
-mba <- apriori(data_arules, parameter = list(sup = 0.1, conf = 0.8, target="rules",minlen=3,maxlen=4))
+inspect(head(sort(mba_bad, by="lift"),10))[,c(1:5,7)]
 ```
 
 ```{r}
-inspect(head(sort(mba, by="lift"),10))
+plot(head(sort(mba_bad,by="lift"),10),method="graph",)
 ```
+
+## Good Time Management
+
+```{r}
+mba_good <- apriori(data_arules, parameter = list(sup = 0.05, conf = 0.5, target="rules",minlen=3,maxlen=4),appearance = list(rhs= "cluster=Good", default = "lhs"))
+```
+
+```{r}
+inspect(head(sort(mba_good, by="lift"),10))[,c(1:5,7)]
+```
+
+```{r}
+plot(head(sort(mba_good,by="lift"),10),method="graph",control=list(layout=igraph::in_circle()))
+```
+
+# Scrape for time management tips
+
+```{r}
+link <- paste0("https://quickbooks.intuit.com/r/employee-management/time-management-tips/#:~:text=If%20you%20want%20to%20improve%20your%20time%20management,compare%20actual%20time%20spent%20and%20estimated%20time%20spent.")
+pages <- read_html(link)
+```
+
+```{r}
+Tips <- pages %>% 
+      html_nodes(".body-article .content-article h2") %>%
+      html_text()
+Tips <- Tips[3:27]
+
+#"or for more info you can clik [here](https://quickbooks.intuit.com/r/employee-management/time-management-tips/#:~:text=If%20you%20want%20to%20improve%20your%20time%20management,compare%20actual%20time%20spent%20and%20estimated%20time%20spent.)" #nanti dicantumin authornya sama linknya kita ambil tips)
+```
+
 
