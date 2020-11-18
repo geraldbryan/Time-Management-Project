@@ -206,9 +206,6 @@ a <- ggplot(data2 , aes(x=Age,y=score))+
   scale_x_continuous()
 
 ggplotly(a)
-
-
-sbdhjajhsdjhabd
 ```
 
 # Association rules
