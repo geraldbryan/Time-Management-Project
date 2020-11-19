@@ -378,12 +378,14 @@ data_arules <- data_clus %>%
 
 data_arules$cluster <- ifelse(data_arules$cluster==1, "Bad",
                               ifelse(data_arules$cluster==2, "Good", "Normal"))
+
+data_arules$cluster <- as.factor(data_arules$cluster)
 ```
 
 
 ```{r}
 # Check data_clus
-glimpse(data_clus)
+glimpse(data_arules)
 ```
 
 ## Bad Time Management
@@ -394,8 +396,6 @@ mba_bad <- apriori(data_arules,
                                     target="rules", minlen=3, maxlen=4),
                    appearance = list(rhs= "cluster=Bad", default = "lhs"))
 ```
-
-Note : Got an error about column 13 since it is not logical. But why? Glimpse says it is. 
 
 ```{r}
 # Inspect the rules
