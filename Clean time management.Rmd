@@ -27,7 +27,6 @@ library(plotly)
 library(abind)
 library(timeDate)
 library(rvest)
-library(car)
 
 # Plot Theme
 theme_set <- theme(legend.key = element_rect(fill="black"),
