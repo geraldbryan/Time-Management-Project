@@ -187,16 +187,6 @@ head(data)
 ```
 
 ```{r}
-# Subset the data for manipulation
-data_ques <- data %>% select(c(15:27))
-
-# Rename the variable's name
-colnames(data_ques) <- c("X6","X7","X8","X9","X10",
-                         "X11","X12","X13","X14","X15",
-                         "X16","X17","Score")
-```
-
-```{r}
 # Visualize the Total Score distribution
 ggplot(data, aes(x = score))+
   geom_histogram(col = "lightblue")+
@@ -205,11 +195,10 @@ ggplot(data, aes(x = score))+
 Distribution = okay
 
 ```{r}
-summary(data_ques$Score)
+summary(data$score)
 ```
 
 If the mean and median is close, we are on the right track.
-
 
 ```{r}
 # Checking the Age Cummulation based on Gender
@@ -349,7 +338,8 @@ ggplot(NULL, aes(x = Age, y = score))+
 ```{r}
 # Boxplot of cluster and score (Optional = I prefer this plotly)
 boxplot_cluster <- ggplot(data_kmean, aes(x = as.factor(model_clus$cluster), y = score)) +
-  geom_boxplot()
+  geom_boxplot()+
+  labs(title = "Score distribution based on Cluster ", x = "Cluster", y="Score")
 ggplotly(boxplot_cluster)
 ```
 
@@ -372,9 +362,12 @@ What is the title for this plot?
 ## Association rules
 
 ```{r}
-# Take only the survey results & Cluster
-data_arules <- data_clus %>% 
-  select(c(3:14,28)) # Original survey results and 28 for the cluster identity
+# Take only the survey results & Cluster from Original Data
+data_kmean_clus <- cbind(data_kmean,model_clus$cluster)
+colnames(data_kmean_clus)[16] <- "cluster"
+
+data_arules <- data_kmean_clus %>% 
+  select(c(3:14,16)) # Original survey results and 16 for the cluster identity
 
 data_arules$cluster <- ifelse(data_arules$cluster==1, "Bad",
                               ifelse(data_arules$cluster==2, "Good", "Normal"))
@@ -477,7 +470,7 @@ Tips <- pages %>%
       html_text()
 Tips <- Tips[3:27]
 
+Tips <- as.data.frame(Tips)
 #"or for more info you can clik [here](https://quickbooks.intuit.com/r/employee-management/time-management-tips/#:~:text=If%20you%20want%20to%20improve%20your%20time%20management,compare%20actual%20time%20spent%20and%20estimated%20time%20spent.)" #nanti dicantumin authornya sama linknya kita ambil tips) #thumbs up! well done GB
 ```
-
 
