@@ -256,7 +256,7 @@ server <- function(input, output) {
                      axis.text = element_text(color="white"))
   
   #Read Data
-  original_data <- read.csv("D:/Documents/Supertype/Time Management unit 5 project/Time-Management-Project/International students Time management data.csv")
+  original_data <- read.csv("International students Time management data.csv") # Be generic
   
   # Subset the relevant data for the cleaning and transformation
   data <- original_data %>%
