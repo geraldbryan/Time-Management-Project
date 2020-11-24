@@ -44,10 +44,7 @@ ui <- dashboardPagePlus(
                     sidebarMenu( id = "mytabs",
                                  menuItem("Home", tabName="home", icon = icon("home")),
                                  menuItem("Test", tabName="test", icon = icon("file-alt")),
-                                 menuItem("Statistics", tabName="statistic", icon = icon("bar-chart-o")),
-                                 menuItem("Code Source", tabName="code", icon = icon("code"), 
-                                          menuSubItem("Clustering", tabName = "cluster"),
-                                          menuSubItem("Association Rules", tabName = "arules"))
+                                 menuItem("Statistics", tabName="statistic", icon = icon("bar-chart-o"))
                     )
   ),
   
@@ -71,29 +68,25 @@ ui <- dashboardPagePlus(
             ),
             useShinyalert(), style= "display: flex; justify-content: center;", column(10, align="center", offset=1,
                                                                                       div(style="display:inline-block;width:27%;text-align: center;",actionButton("tes","Test",icon = icon("file-alt"))),
-                                                                                      div(style="display:inline-block;width:27%;text-align: center;",actionButton("stat","Statistics",icon = icon("bar-chart-o"))),
-                                                                                      div(style="display:inline-block;width:27%;text-align: center;",actionButton("kode","Code Source",icon = icon("code")))))
+                                                                                      div(style="display:inline-block;width:27%;text-align: center;",actionButton("stat","Statistics",icon = icon("bar-chart-o")))))
     ),
     tabItem(tabName = "test", sidebarLayout(
       sidebarPanel(textInput("name","Enter Your Name:"),
-                   radioButtons("gender", "Select Your Gender", choices = c("F","M"), inline = TRUE),
-                   sliderTextInput("age","Select Your Age:",choices = c("18-20","21-25",">25"), grid = TRUE),
+                   radioButtons("Gender", "Select Your Gender", choices = c("F","M"), inline = TRUE),
+                   sliderTextInput("Age","Select Your Age:",choices = c("18-20","21-25",">25"), grid = TRUE),
                    useShinyalert(),  # Set up shinyalert
-                   actionButton("ques1", "Question 1"),
-                   br(),
-                   actionButton("ques2", "Question 2"),
-                   br(),
-                   actionButton("ques3", "Question 3"),
+                   div(style ='display: flex; justify-content: center;',actionButton("ques1", "Start Test"))
       ),
+      
       mainPanel(tabsetPanel( 
         tabPanel("Result",br(),
                  tabBox( tabPanel("",plotOutput("ori_clust")),
                          title = "Original Clustering Plot",
                          height = "450px", width = 12,side = "right"),
                  #kasih text apa gitu
-                 tabBox( #Input ori + new data clustering plot
+                 tabBox( tabPanel("",plotOutput("clustering")),
                    title = "Time Management Test Result",
-                   height = "300px", width = 12,side = "right")),
+                   height = "450px", width = 12,side = "right")),
         tabPanel("Recommendation", br(),
                  tabBox( div(style = 'overflow-y:scroll;height:300px;width=12',
                              tableOutput('time_tips'),
@@ -149,13 +142,7 @@ ui <- dashboardPagePlus(
                    visNetworkOutput("bad_vis_graph"), br(),
                    plotlyOutput("bad_vis_scat"), br(),
                    plotOutput("bad_vis_paracord"))
-      ))),
-    
-    tabItem(tabName = "cluster", h2("Dashboard")
-    ),
-    
-    tabItem(tabName = "arules", h2("Dashboard tab")
-    )
+      )))
   )
   ),
   footer = dashboardFooter(
@@ -203,30 +190,20 @@ server <- function(input, output) {
   
   #Question modals
   observeEvent(input$ques1, {
-    shinyalert(html = TRUE, text = tagList(
-      sliderTextInput("X6", "1. You often feel that your life is aimless, with no definite purpose",choices = c("Strong Disagree","Disagree","Neither","Agree","Strong Agree"),selected = "Neither"), 
-      sliderTextInput("X7", "2. You never have trouble organizing the things you have to do",choices = c("Strong Disagree","Disagree","Neither","Agree","Strong Agree"),selected = "Neither"),
-      sliderTextInput("X8", "3. Once you've started an activity, you persist at it until you've completed it",choices = c("Strong Disagree","Disagree","Neither","Agree","Strong Agree"),selected = "Neither"),
-      sliderTextInput("X9", "4. Sometimes you feel that the things you have to do during the day just don't seem to matter",choices = c("Strong Disagree","Disagree","Neither","Agree","Strong Agree"),selected = "Neither"),
-    )) }
-  )
-  
-  observeEvent(input$ques2, {
-    shinyalert(html = TRUE, text = tagList(
-      sliderTextInput("X10", "5. You will plan your activities from day to day",choices = c("Strong Disagree","Disagree","Neither","Agree","Strong Agree"),selected = "Neither"),
-      sliderTextInput("X11", "6. You tend to leave things to the last minute",choices = c("Strong Disagree","Disagree","Neither","Agree","Strong Agree"),selected = "Neither"),
-      sliderTextInput("X12", "7. You tend to change rather aimlessly from one activity to another during the day",choices = c("Strong Disagree","Disagree","Neither","Agree","Strong Agree"),selected = "Neither"),
-      sliderTextInput("X13", "8. You give up the things that you planning to do just because your friend says no",choices = c("Strong Disagree","Disagree","Neither","Agree","Strong Agree"),selected = "Neither"),
-    )) }
-  )
-  
-  observeEvent(input$ques3, {
-    shinyalert(html = TRUE, text = tagList(
-      sliderTextInput("X14", "9. You think you do enough with your time",choices = c("Strong Disagree","Disagree","Neither","Agree","Strong Agree"),selected = "Neither"),
-      sliderTextInput("X15", "10. You are easy to get bored with your day-today activities",choices = c("Strong Disagree","Disagree","Neither","Agree","Strong Agree"),selected = "Neither"),
-      sliderTextInput("X16", "11. The important interests/activities in your life tend to change frequently",choices = c("Strong Disagree","Disagree","Neither","Agree","Strong Agree"),selected = "Neither"),
+    shinyalert(html = TRUE,size="m", text = div(style = 'overflow-y:scroll;height:300px;width=12',tagList(
+      sliderTextInput("X6", "1. You often feel that your life is aimless, with no definite purpose",choices = c("Strong Disagree","Disagree","Neither","Agree","Strong Agree"),selected = "Neither"), br(),
+      sliderTextInput("X7", "2. You never have trouble organizing the things you have to do",choices = c("Strong Disagree","Disagree","Neither","Agree","Strong Agree"),selected = "Neither"), br(),
+      sliderTextInput("X8", "3. Once you've started an activity, you persist at it until you've completed it",choices = c("Strong Disagree","Disagree","Neither","Agree","Strong Agree"),selected = "Neither"), br(),
+      sliderTextInput("X9", "4. Sometimes you feel that the things you have to do during the day just don't seem to matter",choices = c("Strong Disagree","Disagree","Neither","Agree","Strong Agree"),selected = "Neither"),br(),
+      sliderTextInput("X10", "5. You will plan your activities from day to day",choices = c("Strong Disagree","Disagree","Neither","Agree","Strong Agree"),selected = "Neither"),br(),
+      sliderTextInput("X11", "6. You tend to leave things to the last minute",choices = c("Strong Disagree","Disagree","Neither","Agree","Strong Agree"),selected = "Neither"),br(),
+      sliderTextInput("X12", "7. You tend to change rather aimlessly from one activity to another during the day",choices = c("Strong Disagree","Disagree","Neither","Agree","Strong Agree"),selected = "Neither"),br(),
+      sliderTextInput("X13", "8. You give up the things that you planning to do just because your friend says no",choices = c("Strong Disagree","Disagree","Neither","Agree","Strong Agree"),selected = "Neither"),br(),
+      sliderTextInput("X14", "9. You think you do enough with your time",choices = c("Strong Disagree","Disagree","Neither","Agree","Strong Agree"),selected = "Neither"),br(),
+      sliderTextInput("X15", "10. You are easy to get bored with your day-today activities",choices = c("Strong Disagree","Disagree","Neither","Agree","Strong Agree"),selected = "Neither"),br(),
+      sliderTextInput("X16", "11. The important interests/activities in your life tend to change frequently",choices = c("Strong Disagree","Disagree","Neither","Agree","Strong Agree"),selected = "Neither"),br(),
       sliderTextInput("X17", "12. You know how much time you spend on each of the homework I do",choices = c("Strong Disagree","Disagree","Neither","Agree","Strong Agree"),selected = "Neither")
-    )) }
+    ))) }
   )
   
   #Web Scraping
@@ -428,7 +405,73 @@ server <- function(input, output) {
     labs(title = "Score distribution based on Cluster ", x = "Cluster", y="Score")
   output$boxplot_cluster <- renderPlotly(ggplotly(boxplot_cluster))  
   
-  ######################## Kurang cluster buat input data
+  # Clustering for new data
+  
+  ## Input new data
+  g <- reactive({paste(c(input$Age, input$Gender, input$X6, input$X7, input$X8, input$X9, input$X10, input$X11, input$X12, input$X13, input$X14, input$X15, input$X16, input$X17))})
+
+  ## New data pre-processing
+  ### Change the input into a dataframe
+  f <- reactive({as.data.frame(g())})
+  
+  
+  ### Transpose the input data
+  e <- reactive({as.data.frame(t(f()))})
+  
+  # Rename the columns 
+  d <- reactive({e() %>%
+    rename("Age" = V1,
+           "Gender" = V2,
+           "X6" = V3,
+           "X7" = V4,
+           "X8" = V5,
+           "X9" = V6,
+           "X10" = V7,
+           "X11" = V8,
+           "X12" = V9,
+           "X13" = V10,
+           "X14" = V11,
+           "X15" = V12,
+           "X16" = V13,
+           "X17" = V14)})
+  
+  ### Apply the function 
+   b<- reactive({clean(d())})
+  
+  ### Since the kproton uses min of 2 observations,  we bind it with the last observation from the original data
+  a <- reactive({rbind(data[125,],b())})
+  
+  ### Subset the input data
+  a_kmean <- reactive({a() %>%
+    select(-c(15:26))})
+
+  ## Predict the model
+  set.seed(100)
+  test <- reactive({predict(model_clus,a_kmean())})
+  
+  ## Select the clustering result
+  Clusters <- reactive({append(model_clus$cluster, test()$cluster)})
+  clusters <- reactive({as.factor(Clusters())})
+  
+  ### Make a new data frame from original data + input data
+  newdata <- reactive({rbind(data,a())})
+  
+  ### Column bind data 2 + cluster result
+  data_clus <- reactive({cbind(newdata(), clusters())})
+  
+  ### A new data frame only the 'input data' for visualization needs
+  data_new <- reactive({data_clus()[127,]})
+  
+  ## Plot clustering with new data
+  plot_result <- reactive({ggplot(NULL,aes(x=Age,y=score))+
+                  geom_point(data=data_clus() , aes(col=data_clus()$cluster), position = jitter) +
+                  geom_jitter(data = data_new(), aes(col=data_new()$cluster), shape=8, size=3, stroke=2) +
+                  theme(legend.position = "none") +
+                  guides(fill=FALSE) +
+                  scale_colour_manual(name="Cluster", labels=c("Bad", "Good","Normal"),values=c("red","dark green", "gold")) +
+                  ggtitle("Clustering result") +
+                  theme_set})
+  output$clustering <- renderPlot(plot_result())
   
   #Association Rules (MBA)
   
