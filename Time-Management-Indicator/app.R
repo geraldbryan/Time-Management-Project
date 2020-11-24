@@ -85,8 +85,8 @@ ui <- dashboardPagePlus(
                          height = "450px", width = 12,side = "right"),
                  #kasih text apa gitu
                  tabBox( tabPanel("",plotOutput("clustering")),
-                   title = "Time Management Test Result",
-                   height = "450px", width = 12,side = "right")),
+                         title = "Time Management Test Result",
+                         height = "450px", width = 12,side = "right")),
         tabPanel("Recommendation", br(),
                  tabBox( div(style = 'overflow-y:scroll;height:300px;width=12',
                              tableOutput('time_tips'),
@@ -409,7 +409,7 @@ server <- function(input, output) {
   
   ## Input new data
   g <- reactive({paste(c(input$Age, input$Gender, input$X6, input$X7, input$X8, input$X9, input$X10, input$X11, input$X12, input$X13, input$X14, input$X15, input$X16, input$X17))})
-
+  
   ## New data pre-processing
   ### Change the input into a dataframe
   f <- reactive({as.data.frame(g())})
@@ -420,31 +420,31 @@ server <- function(input, output) {
   
   # Rename the columns 
   d <- reactive({e() %>%
-    rename("Age" = V1,
-           "Gender" = V2,
-           "X6" = V3,
-           "X7" = V4,
-           "X8" = V5,
-           "X9" = V6,
-           "X10" = V7,
-           "X11" = V8,
-           "X12" = V9,
-           "X13" = V10,
-           "X14" = V11,
-           "X15" = V12,
-           "X16" = V13,
-           "X17" = V14)})
+      rename("Age" = V1,
+             "Gender" = V2,
+             "X6" = V3,
+             "X7" = V4,
+             "X8" = V5,
+             "X9" = V6,
+             "X10" = V7,
+             "X11" = V8,
+             "X12" = V9,
+             "X13" = V10,
+             "X14" = V11,
+             "X15" = V12,
+             "X16" = V13,
+             "X17" = V14)})
   
   ### Apply the function 
-   b<- reactive({clean(d())})
+  b<- reactive({clean(d())})
   
   ### Since the kproton uses min of 2 observations,  we bind it with the last observation from the original data
   a <- reactive({rbind(data[125,],b())})
   
   ### Subset the input data
   a_kmean <- reactive({a() %>%
-    select(-c(15:26))})
-
+      select(-c(15:26))})
+  
   ## Predict the model
   set.seed(100)
   test <- reactive({predict(model_clus,a_kmean())})
@@ -464,13 +464,13 @@ server <- function(input, output) {
   
   ## Plot clustering with new data
   plot_result <- reactive({ggplot(NULL,aes(x=Age,y=score))+
-                  geom_point(data=data_clus() , aes(col=data_clus()$cluster), position = jitter) +
-                  geom_jitter(data = data_new(), aes(col=data_new()$cluster), shape=8, size=3, stroke=2) +
-                  theme(legend.position = "none") +
-                  guides(fill=FALSE) +
-                  scale_colour_manual(name="Cluster", labels=c("Bad", "Good","Normal"),values=c("red","dark green", "gold")) +
-                  ggtitle("Clustering result") +
-                  theme_set})
+      geom_point(data=data_clus() , aes(col=data_clus()$cluster), position = jitter) +
+      geom_jitter(data = data_new(), aes(col=data_new()$cluster), shape=8, size=3, stroke=2) +
+      theme(legend.position = "none") +
+      guides(fill=FALSE) +
+      scale_colour_manual(name="Cluster", labels=c("Bad", "Good","Normal"),values=c("red","dark green", "gold")) +
+      ggtitle("Clustering result") +
+      theme_set})
   output$clustering <- renderPlot(plot_result())
   
   #Association Rules (MBA)
