@@ -27,6 +27,7 @@ library(abind)
 library(timeDate)
 library(rvest)
 library(visNetwork)
+library(dashboardthemes)
 
 # Define UI for application that draws a histogram
 ui <- dashboardPagePlus(
@@ -48,27 +49,32 @@ ui <- dashboardPagePlus(
                     )
   ),
   
-  dashboardBody(useShinyjs(),tabItems(
+  dashboardBody(shinyDashboardThemes(
+    theme = "poor_mans_flatly"
+  ),useShinyjs(),tabItems(
     tabItem(tabName = "home", 
             div(style="text-align: center;font-size: 65px;","Time Management Indicator"),
             br(),
+            div(style="text-align: center; height: 200px",imageOutput("image")),
             br(),
-            div(style="text-align: center;",h3("Take a look of what we have provided for you")),
+            div(style="text-align: center;",h4("Take a look of what we have provided for you:")),
             br(),
             div(tags$head(
-              tags$style(".selectize-input { font-size: 32px}",HTML("
-                  .btn {
+              tags$style(HTML("
+                  #tes,#stat {
                     display:block;
-                    color: Green;
+                    color : white;
+                    background-color: MediumSeaGreen;
                     border-radius: 50%;
-                    height: 125px;
-                    width: 125px;
-                    border: 3px solid black;}
+                    height: 175px;
+                    width: 175px;
+                    border: 3px solid gray;
+                    font-size: 24px;}
                     "))
             ),
-            useShinyalert(), style= "display: flex; justify-content: center;", column(10, align="center", offset=1,
-                                                                                      div(style="display:inline-block;width:27%;text-align: center;",actionButton("tes","Test",icon = icon("file-alt"))),
-                                                                                      div(style="display:inline-block;width:27%;text-align: center;",actionButton("stat","Statistics",icon = icon("bar-chart-o")))))
+            useShinyalert(), style= "display: flex; justify-content: center;", column(10, align="center", offset=2,
+                                                                                      div(style="display:inline-block;width:35%;text-align: center; text-size:32",actionButton("tes","Test",icon = icon("file-alt"))),
+                                                                                      div(style="display:inline-block;width:35%;text-align: center;",actionButton("stat","Statistics",icon = icon("bar-chart-o")))))
     ),
     tabItem(tabName = "test", sidebarLayout(
       sidebarPanel(textInput("name","Enter Your Name:"),
@@ -77,19 +83,20 @@ ui <- dashboardPagePlus(
                    useShinyalert(),  # Set up shinyalert
                    div(style ='display: flex; justify-content: center;',actionButton("ques1", "Start Test"))
       ),
-      
       mainPanel(tabsetPanel( 
         tabPanel("Result",br(),
                  tabBox( tabPanel("",plotOutput("ori_clust")),
                          title = "Original Clustering Plot",
                          height = "450px", width = 12,side = "right"),
                  #kasih text apa gitu
-                 tabBox( tabPanel("",plotOutput("clustering")),
+                 tabBox( tabPanel("",plotOutput("clustering"),
+                                  h6(p(strong("Note: * is your data")))),
                          title = "Time Management Test Result",
-                         height = "450px", width = 12,side = "right")),
+                         height = "500px", width = 12,side = "right")),
         tabPanel("Recommendation", br(),
                  tabBox( div(style = 'overflow-y:scroll;height:300px;width=12',
                              tableOutput('time_tips'),
+                             tags$a(href= "https://quickbooks.intuit.com/r/employee-management/time-management-tips/#:~:text=If%20you%20want%20to%20improve%20your%20time%20management,compare%20actual%20time%20spent%20and%20estimated%20time%20spent.", "Source"),
                              title = "Time Management Recommendation",
                              height = "300px", width = 6,side = "right")),
                  fluidRow(tabBox(div(style = 'overflow-y:scroll;height:300px;width=12',h6("X6 =You often feel that your life is aimless, with no definite purpose", br(),br(),
@@ -106,42 +113,56 @@ ui <- dashboardPagePlus(
                                                                                           "X17 = You know how much time you spend on each of the homework I do"),
                                      title = "Question List",
                                      height = "300px", width = 6,side = "right"))),
-                 tabBox( div(style = 'overflow-x:scroll;',
-                             tableOutput('asso_good')),
-                         title = "Good Time Management Factors",
-                         height = "300px", width = 6,side = "right"),
-                 tabBox( div(style = 'overflow-x:scroll;',
-                             tableOutput('asso_bad')),
-                         title = "Bad Time Management Factors",
-                         height = "300px", width = 6,side = "right"),
+                 tabBox(tabPanel("Good Quality",tableOutput('asso_good')),
+                        tabPanel("Bad Quality",tableOutput('asso_bad')),
+                         title = "Factors that can Impact your Time Management Quality",
+                         height = "300px", width = 12,side = "right")
         )
       )))),
     
     tabItem(tabName = "statistic",tabsetPanel(
-      tabPanel("Data", br(),
+      tabPanel("Data",div(style= "text-align: center;",h2(p(strong("Preview of Data that are Used to Make the Model")))), br(),
                div(style = 'overflow-x:scroll;height:323px;width=12',
                    tableOutput("head_data")), br(),
+               div(style= "text-align: center;",h2(p(strong("Exploratory Data Analysis")))), br(),
                splitLayout(plotOutput("gender_plot"),
                            plotOutput("score_gender")), br(),
                plotOutput("dist_plot")),
-      tabPanel("Clustering", br(),
-               plotOutput("elbow_plot"), br(),
+      tabPanel("Clustering", br(), sidebarLayout(
+        sidebarPanel(h4(" We use the 'elbow method' to determine the number of clustering from this data. 
+                           We have to select the value of 'k' at the “elbow” or the point after which the distortion/inertia start decreasing in a linear fashion.
+                           From the given plot above, we conclude the optimal number of cluster is 3, which are 'Good Time Management Quality', 'Bad Time Management Quality', and 'Normal Time Management Quality'"),
+                     tags$a(href="https://www.geeksforgeeks.org/elbow-method-for-optimal-value-of-k-in-kmeans/", "Source")),
+        mainPanel(plotOutput("elbow_plot"))
+      ),
+               br(),
                plotlyOutput("boxplot_cluster")),
       navbarMenu("Association Rules",
                  tabPanel("Good Time Management",sidebarLayout(
-                   sidebarPanel(h2("penjelasan ttg support dkk")
+                   sidebarPanel(h4("Support"), "An indication of how frequently the itemset appears in the dataset", br(),br(),
+                                h4("Confidence"), "An indication of how often the rule has been found to be true.", br(), br(),
+                                h4("Lift"), "The ratio of the observed support to that expected if X and Y were independent.", br(), br(),
+                                tags$a(href="https://en.wikipedia.org/wiki/Association_rule_learning", "Source")
                    ) ,
-                   mainPanel(tableOutput("asso_good_vis"))),
+                   mainPanel(h3(style="text-align: center;", "Good Time Management Association Rules Result"),(div(style= "display: flex; justify-content: center;",tableOutput("asso_good_vis"))))),
                    visNetworkOutput("good_vis_graph"), br(),
-                   plotlyOutput("good_vis_scat"), br(),
-                   plotOutput("good_vis_paracord")),
+                   h3(style="background-color: MediumSeaGreen; color: white; text-align: center; height:35px;", "Good Time Management Association Rules Visualization"),
+                  splitLayout(plotlyOutput("good_vis_scat"),
+                              plotOutput("good_vis_paracord")
+                              )   
+                   ),
                  tabPanel("Bad Time Management",sidebarLayout(
-                   sidebarPanel(h2("penjelasan ttg support dkk")
+                   sidebarPanel(h4("Support"), "An indication of how frequently the itemset appears in the dataset", br(),br(),
+                                h4("Confidence"), "An indication of how often the rule has been found to be true.", br(), br(),
+                                h4("Lift"), "The ratio of the observed support to that expected if X and Y were independent.", br(), br(),
+                                tags$a(href="https://en.wikipedia.org/wiki/Association_rule_learning", "Source")
                    ) ,
-                   mainPanel(tableOutput("asso_bad_vis"))),
+                   mainPanel(h3(style="text-align: center;", "Bad Time Management Association Rules Result"),(div(style= "display: flex; justify-content: center;",tableOutput("asso_bad_vis"))))),
                    visNetworkOutput("bad_vis_graph"), br(),
-                   plotlyOutput("bad_vis_scat"), br(),
-                   plotOutput("bad_vis_paracord"))
+                   h3(style="background-color: MediumSeaGreen; color: white ;text-align: center; height:35px;", "Bad Time Management Association Rules Visualization"),
+                   splitLayout(plotlyOutput("bad_vis_scat"),
+                                plotOutput("bad_vis_paracord"))
+                   )
       )))
   )
   ),
@@ -170,6 +191,13 @@ server <- function(input, output) {
         }
   '}))
   
+  # Image logo
+  output$image <- renderImage({list(src = "time-management.png",
+                                    contentType = "image/png",width=150, height=200,
+                                    alt = "Face")
+  })
+  
+    
   #Information top right
   observeEvent(input$openModal, {
     showModal(
@@ -191,6 +219,7 @@ server <- function(input, output) {
   #Question modals
   observeEvent(input$ques1, {
     shinyalert(html = TRUE,size="m", text = div(style = 'overflow-y:scroll;height:300px;width=12',tagList(
+      h3("Hi", input$name,",", "there are 12 questions for you to answer and let us determine what is your time management quality. Remember to fill all the questions, so the result will be valid. Thank you! :)"), br(),
       sliderTextInput("X6", "1. You often feel that your life is aimless, with no definite purpose",choices = c("Strong Disagree","Disagree","Neither","Agree","Strong Agree"),selected = "Neither"), br(),
       sliderTextInput("X7", "2. You never have trouble organizing the things you have to do",choices = c("Strong Disagree","Disagree","Neither","Agree","Strong Agree"),selected = "Neither"), br(),
       sliderTextInput("X8", "3. Once you've started an activity, you persist at it until you've completed it",choices = c("Strong Disagree","Disagree","Neither","Agree","Strong Agree"),selected = "Neither"), br(),
@@ -202,7 +231,8 @@ server <- function(input, output) {
       sliderTextInput("X14", "9. You think you do enough with your time",choices = c("Strong Disagree","Disagree","Neither","Agree","Strong Agree"),selected = "Neither"),br(),
       sliderTextInput("X15", "10. You are easy to get bored with your day-today activities",choices = c("Strong Disagree","Disagree","Neither","Agree","Strong Agree"),selected = "Neither"),br(),
       sliderTextInput("X16", "11. The important interests/activities in your life tend to change frequently",choices = c("Strong Disagree","Disagree","Neither","Agree","Strong Agree"),selected = "Neither"),br(),
-      sliderTextInput("X17", "12. You know how much time you spend on each of the homework I do",choices = c("Strong Disagree","Disagree","Neither","Agree","Strong Agree"),selected = "Neither")
+      sliderTextInput("X17", "12. You know how much time you spend on each of the homework I do",choices = c("Strong Disagree","Disagree","Neither","Agree","Strong Agree"),selected = "Neither"),
+      h6(p(strong("Note: We do not save your personal information and your answer, so do not be afraid to fill it!")))
     ))) }
   )
   
