@@ -1,4 +1,3 @@
-# load relevant libraries
 library(shiny)
 library(dplyr)
 library(rcompanion)
@@ -36,10 +35,11 @@ ui <- dashboardPagePlus(
                   dropdownMenu(type = "messages",
                                messageItem(
                                  from = "Dashboard Creator",
-                                 message = "Welcome to Time Management Indicator", 
-                                 icon("glass-cheers")
+                                 message = "Welcome to Time Management Indicator", icon("glass-cheers")
                                )),
-                  tags$li(actionLink("openModal", label = "", icon = icon("info")),
+                  tags$li(actionLink("openModal",
+                                     label = "",
+                                     icon = icon("info")),
                           class = "dropdown")
                   
   ),
@@ -54,12 +54,12 @@ ui <- dashboardPagePlus(
   dashboardBody(shinyDashboardThemes(
     theme = "poor_mans_flatly"
   ),useShinyjs(),tabItems(
-    tabItem(tabName = "home", 
+    tabItem(tabName = "home",
             div(style="text-align: center;font-size: 65px;","Time Management Indicator"),
             br(),
             div(style="text-align: center; height: 200px",imageOutput("image")),
             br(),
-            div(style="text-align: center;",h4("Take a look of what we have provided for you:")),
+            div(style="text-align: center;",h4("Dare to be a better time manager? Please take our survey and see yourself")),
             br(),
             div(tags$head(
               tags$style(HTML("
@@ -74,24 +74,18 @@ ui <- dashboardPagePlus(
                     font-size: 24px;}
                     "))
             ),
-            useShinyalert(),
-            style= "display: flex; justify-content: center;", column(10, align="center", offset=2,
-                                                                                      div(style="display:inline-block;width:35%;text-align: center; text-size:32",
-                                                                                          actionButton("tes","Test",icon = icon("file-alt"))),
-                                                                                      div(style="display:inline-block;width:35%;text-align: center;",
-                                                                                          actionButton("stat","Statistics",icon = icon("bar-chart-o")))))
+            useShinyalert(), style= "display: flex; justify-content: center;", column(10, align="center", offset=2,
+                                                                                      div(style="display:inline-block;width:35%;text-align: center; text-size:32",actionButton("tes","Survey",icon = icon("file-alt"))),
+                                                                                      div(style="display:inline-block;width:35%;text-align: center;",actionButton("stat","Statistics",icon = icon("bar-chart-o")))))
     ),
     tabItem(tabName = "test", sidebarLayout(
       sidebarPanel(textInput("name","Enter Your Name:"),
-                   radioButtons("Gender", "Select Your Gender", 
-                                choices = c("F","M"), inline = TRUE),
-                   sliderTextInput("Age","Select Your Age:",
-                                   choices = c("18-20","21-25",">25"), grid = TRUE),
+                   radioButtons("Gender", "Select Your Gender", choices = c("F","M"), inline = TRUE),
+                   sliderTextInput("Age","Select Your Age:",choices = c("18-20","21-25",">25"), grid = TRUE),
                    useShinyalert(),  # Set up shinyalert
-                   div(style ='display: flex; justify-content: center;',
-                       actionButton("ques1", "Start Test"))
+                   div(style ='display: flex; justify-content: center;',actionButton("ques1", "Start Test"))
       ),
-      mainPanel(tabsetPanel( 
+      mainPanel(tabsetPanel(
         tabPanel("Result",br(),
                  tabBox( tabPanel("",plotOutput("ori_clust")),
                          title = "Original Clustering Plot",
@@ -107,24 +101,24 @@ ui <- dashboardPagePlus(
                              tags$a(href= "https://quickbooks.intuit.com/r/employee-management/time-management-tips/#:~:text=If%20you%20want%20to%20improve%20your%20time%20management,compare%20actual%20time%20spent%20and%20estimated%20time%20spent.", "Source"),
                              title = "Time Management Recommendation",
                              height = "300px", width = 6,side = "right")),
-                 fluidRow(tabBox(div(style = 'overflow-y:scroll;height:300px;width=12',h6("X6 =You often feel that your life is aimless, with no definite purpose", br(),br(),
-                                                                                          "X7 = You never have trouble organizing the things you have to do", br(),br(),
-                                                                                          "X8 = Once you've started an activity, you persist at it until you've completed it", br(),br(),
-                                                                                          "X9 = Sometimes you feel that the things you have to do during the day just don't seem to matter", br(),br(),
-                                                                                          "X10 = You will plan your activities from day to day", br(),br(),
-                                                                                          "X11 = You tend to leave things to the last minute", br(),br(),
-                                                                                          "X12 = You tend to change rather aimlessly from one activity to another during the day", br(),br(),
-                                                                                          "X13 = You give up the things that you planning to do just because your friend says no", br(),br(),
-                                                                                          "X14 = You think you do enough with your time", br(),br(),
-                                                                                          "X15 = You are easy to get bored with your day-today activities", br(),br(),
-                                                                                          "X16 = The important interests/activities in your life tend to change frequently", br(),br(),
-                                                                                          "X17 = You know how much time you spend on each of the homework I do"),
+                 fluidRow(tabBox(div(style = 'overflow-y:scroll;height:300px;width=12',h6("1. You often feel that your life is aimless, with no definite purpose", br(),br(),
+                                                                                          "2. You never have trouble organizing the things you have to do", br(),br(),
+                                                                                          "3. Once you've started an activity, you persist at it until you've completed it", br(),br(),
+                                                                                          "4. Sometimes you feel that the things you have to do during the day just don't seem to matter", br(),br(),
+                                                                                          "5. You will plan your activities from day to day", br(),br(),
+                                                                                          "6. You tend to leave things to the last minute", br(),br(),
+                                                                                          "7. You tend to change rather aimlessly from one activity to another during the day", br(),br(),
+                                                                                          "8. You give up the things that you planning to do just because your friend says no", br(),br(),
+                                                                                          "9. You think you do enough with your time", br(),br(),
+                                                                                          "10. You are easy to get bored with your day-today activities", br(),br(),
+                                                                                          "11. The important interests/activities in your life tend to change frequently", br(),br(),
+                                                                                          "12. You know how much time you spend on each of the homework I do"),
                                      title = "Question List",
                                      height = "300px", width = 6,side = "right"))),
                  tabBox(tabPanel("Good Quality",tableOutput('asso_good')),
                         tabPanel("Bad Quality",tableOutput('asso_bad')),
-                         title = "Factors that can Impact your Time Management Quality",
-                         height = "300px", width = 12,side = "right")
+                        title = "Factors that can Impact your Time Management Quality",
+                        height = "300px", width = 12,side = "right")
         )
       )))),
     
@@ -137,14 +131,14 @@ ui <- dashboardPagePlus(
                            plotOutput("score_gender")), br(),
                plotOutput("dist_plot")),
       tabPanel("Clustering", br(), sidebarLayout(
-        sidebarPanel(h4(" We use the 'elbow method' to determine the number of clustering from this data. 
+        sidebarPanel(h4(" We use the 'Elbow method' to determine the number of clustering from this data.
                            We have to select the value of 'k' at the “elbow” or the point after which the distortion/inertia start decreasing in a linear fashion.
                            From the given plot above, we conclude the optimal number of cluster is 3, which are 'Good Time Management Quality', 'Bad Time Management Quality', and 'Normal Time Management Quality'"),
                      tags$a(href="https://www.geeksforgeeks.org/elbow-method-for-optimal-value-of-k-in-kmeans/", "Source")),
         mainPanel(plotOutput("elbow_plot"))
       ),
-               br(),
-               plotlyOutput("boxplot_cluster")),
+      br(),
+      plotlyOutput("boxplot_cluster")),
       navbarMenu("Association Rules",
                  tabPanel("Good Time Management",sidebarLayout(
                    sidebarPanel(h4("Support"), "An indication of how frequently the itemset appears in the dataset", br(),br(),
@@ -155,10 +149,10 @@ ui <- dashboardPagePlus(
                    mainPanel(h3(style="text-align: center;", "Good Time Management Association Rules Result"),(div(style= "display: flex; justify-content: center;",tableOutput("asso_good_vis"))))),
                    visNetworkOutput("good_vis_graph"), br(),
                    h3(style="background-color: MediumSeaGreen; color: white; text-align: center; height:35px;", "Good Time Management Association Rules Visualization"),
-                  splitLayout(plotlyOutput("good_vis_scat"),
-                              plotOutput("good_vis_paracord")
-                              )   
-                   ),
+                   splitLayout(plotlyOutput("good_vis_scat"),
+                               plotOutput("good_vis_paracord")
+                   )
+                 ),
                  tabPanel("Bad Time Management",sidebarLayout(
                    sidebarPanel(h4("Support"), "An indication of how frequently the itemset appears in the dataset", br(),br(),
                                 h4("Confidence"), "An indication of how often the rule has been found to be true.", br(), br(),
@@ -169,8 +163,8 @@ ui <- dashboardPagePlus(
                    visNetworkOutput("bad_vis_graph"), br(),
                    h3(style="background-color: MediumSeaGreen; color: white ;text-align: center; height:35px;", "Bad Time Management Association Rules Visualization"),
                    splitLayout(plotlyOutput("bad_vis_scat"),
-                                plotOutput("bad_vis_paracord"))
-                   )
+                               plotOutput("bad_vis_paracord"))
+                 )
       )))
   )
   ),
@@ -205,28 +199,26 @@ server <- function(input, output) {
                                     alt = "Face")
   })
   
-    
+  
   #Information top right
   observeEvent(input$openModal, {
     showModal(
-      modalDialog(title = "About Time Management Indicator",
-                  p("Some information"),easyClose = TRUE, footer = NULL)
+      modalDialog(title = "About the Project",
+                  p("The webpage is RShiny with dashboardthemes library"),easyClose = TRUE, footer = NULL)
     )
   })
   
-  #Menu explanation
-  observeEvent(input$tes, {shinyalert("menu 1 blablablablabla",
-                                      showConfirmButton = FALSE,closeOnEsc = FALSE,
+  #Menu explaination
+  observeEvent(input$tes, {shinyalert("Do you have a good time management? Please take the survey to figure it out",showConfirmButton = FALSE,closeOnEsc = FALSE,
                                       closeOnClickOutside = TRUE)})
   
-  observeEvent(input$stat, {shinyalert("menu 2 blablablablablabla",
-                                       showConfirmButton = FALSE,closeOnEsc = FALSE,
+  observeEvent(input$stat, {shinyalert("This is the details of statistics for good and bad time management",showConfirmButton = FALSE,closeOnEsc = FALSE,
                                        closeOnClickOutside = TRUE)})
   
   #Question modals
   observeEvent(input$ques1, {
     shinyalert(html = TRUE,size="m", text = div(style = 'overflow-y:scroll;height:300px;width=12',tagList(
-      h3("Hi", input$name,",", "there are 12 questions for you to answer and let us determine what is your time management quality. Remember to fill all the questions, so the result will be valid. Thank you! :)"), br(),
+      h3("Hi", input$name,",", "there are 12 questions for you to answer and let us determine your time management quality. Remember to fill all the questions, so the result will be valid. Thank you! :)"), br(),
       sliderTextInput("X6", "1. You often feel that your life is aimless, with no definite purpose",choices = c("Strong Disagree","Disagree","Neither","Agree","Strong Agree"),selected = "Neither"), br(),
       sliderTextInput("X7", "2. You never have trouble organizing the things you have to do",choices = c("Strong Disagree","Disagree","Neither","Agree","Strong Agree"),selected = "Neither"), br(),
       sliderTextInput("X8", "3. Once you've started an activity, you persist at it until you've completed it",choices = c("Strong Disagree","Disagree","Neither","Agree","Strong Agree"),selected = "Neither"), br(),
@@ -243,12 +235,12 @@ server <- function(input, output) {
     ))) }
   )
   
-  #Web Scraping
+  # Web Scraping
   
   link <- paste0("https://quickbooks.intuit.com/r/employee-management/time-management-tips/#:~:text=If%20you%20want%20to%20improve%20your%20time%20management,compare%20actual%20time%20spent%20and%20estimated%20time%20spent.")
   pages <- read_html(link)
   
-  Tips <- pages %>% 
+  Tips <- pages %>%
     html_nodes(".body-article .content-article h2") %>%
     html_text()
   Tips <- Tips[3:27]
@@ -269,7 +261,7 @@ server <- function(input, output) {
                      text = element_text(color="white"),
                      axis.text = element_text(color="white"))
   
-  #Read Data
+  # Read Data
   original_data <- read.csv("International students Time management data.csv")
   
   # Subset the relevant data for the cleaning and transformation
@@ -294,7 +286,7 @@ server <- function(input, output) {
     x$X16 <- ifelse(x$X16=="","Neither",x$X16)
     x$X17 <- ifelse(x$X17=="","Neither",x$X17)
     
-    # Transform the character into Likert Scale 
+    # Transform the character into Likert Scale
     x$X6_num <- ifelse(x$X6=="Strong Agree",1,
                        ifelse(x$X6=="Agree",2,
                               ifelse(x$X6=="Neither",3,
@@ -355,8 +347,8 @@ server <- function(input, output) {
                                ifelse(x$X17=="Neither",3,
                                       ifelse(x$X17=="Disagree",2,1))))
     
-    # Sum the total score 
-    x$score <- x$X6_num + x$X7_num + x$X8_num + x$X9_num + 
+    # Sum the total score
+    x$score <- x$X6_num + x$X7_num + x$X8_num + x$X9_num +
       x$X10_num + x$X11_num +x$X12_num + x$X13_num +
       x$X14_num +x$X15_num + x$X16_num +x$X17_num
     
@@ -401,23 +393,22 @@ server <- function(input, output) {
     kproto(data_kmean, k)$tot.withinss
   }
   
-  ## Define k = 1 to 10 
+  ## Define k = 1 to 10
   k.values <- 1:10
   
   ## Extract the wss for 2-10 clusters
   wss_values <- map_dbl(k.values, wss)
   
   output$elbow_plot <- renderPlot(plot(k.values, wss_values,
-                                       type="b", pch = 19, frame = FALSE, 
+                                       type="b", pch = 19, frame = FALSE,
                                        ylim=c(25000,50000),
                                        xlim=c(1,10),
                                        xlab="Number of clusters K",
-                                       ylab="Total within-clusters sum of squares", 
-                                       main="Elbow Plot for Kmeans"))
+                                       ylab="Total within-clusters sum of squares", main="Elbow Plot for Kmeans"))
   
   ## Clustering Model
   
-  set.seed(100) 
+  set.seed(100)
   
   ### Set the model with 3 clusters
   model_clus <- kproto(data_kmean, 3)
@@ -428,7 +419,7 @@ server <- function(input, output) {
   
   ### plot clustering original
   ori_clust <-ggplot(NULL, aes(x = Age, y = score))+
-    geom_point(data = data_kmean, aes(col = as.factor(model_clus$cluster)), 
+    geom_point(data = data_kmean, aes(col = as.factor(model_clus$cluster)),
                position = jitter) +
     theme(legend.position = "bottom") +
     guides(fill=FALSE) +
@@ -441,7 +432,7 @@ server <- function(input, output) {
   boxplot_cluster <- ggplot(data_kmean, aes(x = as.factor(model_clus$cluster), y = score)) +
     geom_boxplot() +
     labs(title = "Score distribution based on Cluster ", x = "Cluster", y="Score")
-  output$boxplot_cluster <- renderPlotly(ggplotly(boxplot_cluster))  
+  output$boxplot_cluster <- renderPlotly(ggplotly(boxplot_cluster))
   
   # Clustering for new data
   
@@ -456,7 +447,7 @@ server <- function(input, output) {
   ### Transpose the input data
   e <- reactive({as.data.frame(t(f()))})
   
-  # Rename the columns 
+  # Rename the columns
   d <- reactive({e() %>%
       rename("Age" = V1,
              "Gender" = V2,
@@ -473,7 +464,7 @@ server <- function(input, output) {
              "X16" = V13,
              "X17" = V14)})
   
-  ### Apply the function 
+  ### Apply the function
   b<- reactive({clean(d())})
   
   ### Since the kproton uses min of 2 observations,  we bind it with the last observation from the original data
@@ -517,7 +508,7 @@ server <- function(input, output) {
   data_kmean_clus <- cbind(data_kmean,model_clus$cluster)
   colnames(data_kmean_clus)[16] <- "cluster"
   
-  data_arules <- data_kmean_clus %>% 
+  data_arules <- data_kmean_clus %>%
     select(c(3:14,16)) # Original survey results and 16 for the cluster identity
   
   data_arules$cluster <- ifelse(data_arules$cluster==1, "Bad",
@@ -528,7 +519,7 @@ server <- function(input, output) {
   ## Association rules for bad cluster
   
   ### Apply the association rules with Apriori Algorithm
-  mba_bad <- apriori(data_arules, 
+  mba_bad <- apriori(data_arules,
                      parameter = list(sup = 0.05, conf = 0.5,
                                       target="rules", minlen=3, maxlen=4),
                      appearance = list(rhs= "cluster=Bad", default = "lhs"))
@@ -542,11 +533,11 @@ server <- function(input, output) {
   ### plot scatter plot
   subRules<-mba_bad[quality(mba_bad)$confidence > 0.2]
   
-  output$bad_vis_scat <- renderPlotly(plotly_arules(subRules))  
+  output$bad_vis_scat <- renderPlotly(plotly_arules(subRules))
   
   ### Plot graph
   top10subRules <- head(subRules, n = 10, by = "confidence")
-  output$bad_vis_graph <- renderVisNetwork(plot(top10subRules, method = "graph",  engine = "htmlwidget")) 
+  output$bad_vis_graph <- renderVisNetwork(plot(top10subRules, method = "graph",  engine = "htmlwidget"))
   
   ### Plot parallel coordinate
   subRules2<-head(subRules, n=10, by="lift")
@@ -556,7 +547,7 @@ server <- function(input, output) {
   ## Association rules for bad cluster
   
   ### Apply the association rules with Apriori Algorithm
-  mba_good <- apriori(data_arules, 
+  mba_good <- apriori(data_arules,
                       parameter = list(sup = 0.05, conf = 0.5,
                                        target="rules",minlen=3,maxlen=4),
                       appearance = list(rhs= "cluster=Good", default = "lhs"))
@@ -570,17 +561,17 @@ server <- function(input, output) {
   ### plot scatter plot
   subRules_good<-mba_good[quality(mba_good)$confidence > 0.2]
   
-  output$good_vis_scat <- renderPlotly(plotly_arules(subRules_good))  
+  output$good_vis_scat <- renderPlotly(plotly_arules(subRules_good))
   
   ### Plot graph
   top10subRules_good <- head(subRules_good, n = 10, by = "confidence")
-  output$good_vis_graph <- renderVisNetwork(plot(top10subRules_good, method = "graph",  engine = "htmlwidget")) 
+  output$good_vis_graph <- renderVisNetwork(plot(top10subRules_good, method = "graph",  engine = "htmlwidget"))
   
   ### Plot parallel coordinate
   subRules2_good<-head(subRules_good, n=10, by="lift")
   
-  output$good_vis_paracord <- renderPlot(plot(subRules2_good, method="paracoord")) 
+  output$good_vis_paracord <- renderPlot(plot(subRules2_good, method="paracoord"))
 }
 
-# Run the application 
+# Run the application
 shinyApp(ui = ui, server = server)
