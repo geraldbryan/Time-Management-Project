@@ -1,3 +1,4 @@
+# load relevant libraries
 library(shiny)
 library(dplyr)
 library(rcompanion)
@@ -35,7 +36,8 @@ ui <- dashboardPagePlus(
                   dropdownMenu(type = "messages",
                                messageItem(
                                  from = "Dashboard Creator",
-                                 message = "Welcome to Time Management Indicator", icon("glass-cheers")
+                                 message = "Welcome to Time Management Indicator", 
+                                 icon("glass-cheers")
                                )),
                   tags$li(actionLink("openModal", label = "", icon = icon("info")),
                           class = "dropdown")
@@ -72,16 +74,22 @@ ui <- dashboardPagePlus(
                     font-size: 24px;}
                     "))
             ),
-            useShinyalert(), style= "display: flex; justify-content: center;", column(10, align="center", offset=2,
-                                                                                      div(style="display:inline-block;width:35%;text-align: center; text-size:32",actionButton("tes","Test",icon = icon("file-alt"))),
-                                                                                      div(style="display:inline-block;width:35%;text-align: center;",actionButton("stat","Statistics",icon = icon("bar-chart-o")))))
+            useShinyalert(),
+            style= "display: flex; justify-content: center;", column(10, align="center", offset=2,
+                                                                                      div(style="display:inline-block;width:35%;text-align: center; text-size:32",
+                                                                                          actionButton("tes","Test",icon = icon("file-alt"))),
+                                                                                      div(style="display:inline-block;width:35%;text-align: center;",
+                                                                                          actionButton("stat","Statistics",icon = icon("bar-chart-o")))))
     ),
     tabItem(tabName = "test", sidebarLayout(
       sidebarPanel(textInput("name","Enter Your Name:"),
-                   radioButtons("Gender", "Select Your Gender", choices = c("F","M"), inline = TRUE),
-                   sliderTextInput("Age","Select Your Age:",choices = c("18-20","21-25",">25"), grid = TRUE),
+                   radioButtons("Gender", "Select Your Gender", 
+                                choices = c("F","M"), inline = TRUE),
+                   sliderTextInput("Age","Select Your Age:",
+                                   choices = c("18-20","21-25",">25"), grid = TRUE),
                    useShinyalert(),  # Set up shinyalert
-                   div(style ='display: flex; justify-content: center;',actionButton("ques1", "Start Test"))
+                   div(style ='display: flex; justify-content: center;',
+                       actionButton("ques1", "Start Test"))
       ),
       mainPanel(tabsetPanel( 
         tabPanel("Result",br(),
@@ -206,14 +214,13 @@ server <- function(input, output) {
     )
   })
   
-  #Menu explaination
-  observeEvent(input$tes, {shinyalert("menu 1 blablablablabla",showConfirmButton = FALSE,closeOnEsc = FALSE,
+  #Menu explanation
+  observeEvent(input$tes, {shinyalert("menu 1 blablablablabla",
+                                      showConfirmButton = FALSE,closeOnEsc = FALSE,
                                       closeOnClickOutside = TRUE)})
   
-  observeEvent(input$stat, {shinyalert("menu 2 blablablablablabla",showConfirmButton = FALSE,closeOnEsc = FALSE,
-                                       closeOnClickOutside = TRUE)})
-  
-  observeEvent(input$kode, {shinyalert("menu 3 blablablabla",showConfirmButton = FALSE,closeOnEsc = FALSE,
+  observeEvent(input$stat, {shinyalert("menu 2 blablablablablabla",
+                                       showConfirmButton = FALSE,closeOnEsc = FALSE,
                                        closeOnClickOutside = TRUE)})
   
   #Question modals
@@ -405,7 +412,8 @@ server <- function(input, output) {
                                        ylim=c(25000,50000),
                                        xlim=c(1,10),
                                        xlab="Number of clusters K",
-                                       ylab="Total within-clusters sum of squares", main="Elbow Plot for Kmeans"))
+                                       ylab="Total within-clusters sum of squares", 
+                                       main="Elbow Plot for Kmeans"))
   
   ## Clustering Model
   
