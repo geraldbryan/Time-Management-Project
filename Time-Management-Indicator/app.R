@@ -247,10 +247,10 @@ server <- function(input, output) {
   })
   
   #Menu explaination
-  observeEvent(input$tes, {shinyalert("Do you have a good time management? Please take the survey to figure it out",showConfirmButton = FALSE,closeOnEsc = FALSE,
+  observeEvent(input$tes, {shinyalert("Do you have a good time management? Please go to the survey menu to figure it out",showConfirmButton = FALSE,closeOnEsc = FALSE,
                                       closeOnClickOutside = TRUE)})
   
-  observeEvent(input$stat, {shinyalert("This is the details of statistics for good and bad time management",showConfirmButton = FALSE,closeOnEsc = FALSE,
+  observeEvent(input$stat, {shinyalert("Go to statistics menu for more details statistics of about good and bad time management",showConfirmButton = FALSE,closeOnEsc = FALSE,
                                        closeOnClickOutside = TRUE)})
   
   #Question modals
@@ -269,8 +269,9 @@ server <- function(input, output) {
       sliderTextInput("X15", "10. You are easy to get bored with your day-today activities",choices = c("Strong Disagree","Disagree","Neither","Agree","Strong Agree"),selected = "Neither"),br(),
       sliderTextInput("X16", "11. The important interests/activities in your life tend to change frequently",choices = c("Strong Disagree","Disagree","Neither","Agree","Strong Agree"),selected = "Neither"),br(),
       sliderTextInput("X17", "12. You know how much time you spend on each of the homework I do",choices = c("Strong Disagree","Disagree","Neither","Agree","Strong Agree"),selected = "Neither"),
-      h6(p(strong("Note: We do not save your personal information and your answer, so do not be afraid to fill it!")))
-    ))) }
+      h6(p(strong("Note: We do not save your personal information and your answer, so do not be afraid to fill it!"))))),
+      callbackR = function(value) { shinyalert(paste("You have done your survey, please check 'Time Management Result Plot' below"))}
+    ) }
   )
   
   # Web Scraping
