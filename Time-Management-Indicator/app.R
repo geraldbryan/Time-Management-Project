@@ -46,7 +46,7 @@ ui <- dashboardPagePlus(
   dashboardSidebar( collapsed = TRUE,
                     sidebarMenu( id = "mytabs",
                                  menuItem("Home", tabName="home", icon = icon("home")),
-                                 menuItem("Test", tabName="test", icon = icon("file-alt")),
+                                 menuItem("Survey", tabName="test", icon = icon("file-alt")),
                                  menuItem("Statistics", tabName="statistic", icon = icon("bar-chart-o"))
                     )
   ),
@@ -101,18 +101,18 @@ ui <- dashboardPagePlus(
                              tags$a(href= "https://quickbooks.intuit.com/r/employee-management/time-management-tips/#:~:text=If%20you%20want%20to%20improve%20your%20time%20management,compare%20actual%20time%20spent%20and%20estimated%20time%20spent.", "Source"),
                              title = "Time Management Recommendation",
                              height = "300px", width = 6,side = "right")),
-                 fluidRow(tabBox(div(style = 'overflow-y:scroll;height:300px;width=12',h6("1. You often feel that your life is aimless, with no definite purpose", br(),br(),
-                                                                                          "2. You never have trouble organizing the things you have to do", br(),br(),
-                                                                                          "3. Once you've started an activity, you persist at it until you've completed it", br(),br(),
-                                                                                          "4. Sometimes you feel that the things you have to do during the day just don't seem to matter", br(),br(),
-                                                                                          "5. You will plan your activities from day to day", br(),br(),
-                                                                                          "6. You tend to leave things to the last minute", br(),br(),
-                                                                                          "7. You tend to change rather aimlessly from one activity to another during the day", br(),br(),
-                                                                                          "8. You give up the things that you planning to do just because your friend says no", br(),br(),
-                                                                                          "9. You think you do enough with your time", br(),br(),
-                                                                                          "10. You are easy to get bored with your day-today activities", br(),br(),
-                                                                                          "11. The important interests/activities in your life tend to change frequently", br(),br(),
-                                                                                          "12. You know how much time you spend on each of the homework I do"),
+                 fluidRow(tabBox(div(style = 'overflow-y:scroll;height:300px;width=12',h6("X6. You often feel that your life is aimless, with no definite purpose", br(),br(),
+                                                                                          "X7. You never have trouble organizing the things you have to do", br(),br(),
+                                                                                          "X8. Once you've started an activity, you persist at it until you've completed it", br(),br(),
+                                                                                          "X9. Sometimes you feel that the things you have to do during the day just don't seem to matter", br(),br(),
+                                                                                          "X10. You will plan your activities from day to day", br(),br(),
+                                                                                          "X11. You tend to leave things to the last minute", br(),br(),
+                                                                                          "X12. You tend to change rather aimlessly from one activity to another during the day", br(),br(),
+                                                                                          "X13. You give up the things that you planning to do just because your friend says no", br(),br(),
+                                                                                          "X14. You think you do enough with your time", br(),br(),
+                                                                                          "X15. You are easy to get bored with your day-today activities", br(),br(),
+                                                                                          "X16. The important interests/activities in your life tend to change frequently", br(),br(),
+                                                                                          "X17. You know how much time you spend on each of the homework I do"),
                                      title = "Question List",
                                      height = "300px", width = 6,side = "right"))),
                  tabBox(tabPanel("Good Quality",tableOutput('asso_good')),
@@ -130,17 +130,34 @@ ui <- dashboardPagePlus(
                splitLayout(plotOutput("gender_plot"),
                            plotOutput("score_gender")), br(),
                plotOutput("dist_plot")),
-      tabPanel("Clustering", br(), sidebarLayout(
-        sidebarPanel(h4(" We use the 'Elbow method' to determine the number of clustering from this data.
+      
+      tabPanel("Clustering",splitLayout(plotOutput("elbow_plot"),
+                            plotlyOutput("boxplot_cluster")),
+                tabBox(h5("We use the 'Elbow method' to determine the number of clustering from this data.
                            We have to select the value of 'k' at the “elbow” or the point after which the distortion/inertia start decreasing in a linear fashion.
-                           From the given plot above, we conclude the optimal number of cluster is 3, which are 'Good Time Management Quality', 'Bad Time Management Quality', and 'Normal Time Management Quality'"),
-                     tags$a(href="https://www.geeksforgeeks.org/elbow-method-for-optimal-value-of-k-in-kmeans/", "Source")),
-        mainPanel(plotOutput("elbow_plot"))
-      ),
-      br(),
-      plotlyOutput("boxplot_cluster")),
+                           From the given plot above, we conclude the optimal number of cluster is 3, which are 'Good Time Management Quality', 'Bad Time Management Quality', and 'Normal Time Management Quality'",br(),br(),
+                tags$a(href="https://www.geeksforgeeks.org/elbow-method-for-optimal-value-of-k-in-kmeans/", "Source")),
+                    title = "",
+                    height = "300px", width = 12,side = "right"),
+),
+      
       navbarMenu("Association Rules",
-                 tabPanel("Good Time Management",sidebarLayout(
+                 tabPanel("Good Time Management", br(),
+                          tabBox(h6("X6. You often feel that your life is aimless, with no definite purpose", br(),br(),
+                                    "X7. You never have trouble organizing the things you have to do", br(),br(),
+                                    "X8. Once you've started an activity, you persist at it until you've completed it", br(),br(),
+                                    "X9. Sometimes you feel that the things you have to do during the day just don't seem to matter", br(),br(),
+                                    "X10. You will plan your activities from day to day", br(),br(),
+                                    "X11. You tend to leave things to the last minute", br(),br(),
+                                    "X12. You tend to change rather aimlessly from one activity to another during the day", br(),br(),
+                                    "X13. You give up the things that you planning to do just because your friend says no", br(),br(),
+                                    "X14. You think you do enough with your time", br(),br(),
+                                    "X15. You are easy to get bored with your day-today activities", br(),br(),
+                                    "X16. The important interests/activities in your life tend to change frequently", br(),br(),
+                                    "X17. You know how much time you spend on each of the homework I do"),
+                                 title = "Question List",
+                                 height = "375px", width = 12,side = "right"),
+                  sidebarLayout(
                    sidebarPanel(h4("Support"), "An indication of how frequently the itemset appears in the dataset", br(),br(),
                                 h4("Confidence"), "An indication of how often the rule has been found to be true.", br(), br(),
                                 h4("Lift"), "The ratio of the observed support to that expected if X and Y were independent.", br(), br(),
@@ -153,7 +170,22 @@ ui <- dashboardPagePlus(
                                plotOutput("good_vis_paracord")
                    )
                  ),
-                 tabPanel("Bad Time Management",sidebarLayout(
+                 tabPanel("Bad Time Management",
+                          tabBox(h6("X6. You often feel that your life is aimless, with no definite purpose", br(),br(),
+                                                                                          "X7. You never have trouble organizing the things you have to do", br(),br(),
+                                                                                          "X8. Once you've started an activity, you persist at it until you've completed it", br(),br(),
+                                                                                          "X9. Sometimes you feel that the things you have to do during the day just don't seem to matter", br(),br(),
+                                                                                          "X10. You will plan your activities from day to day", br(),br(),
+                                                                                          "X11. You tend to leave things to the last minute", br(),br(),
+                                                                                          "X12. You tend to change rather aimlessly from one activity to another during the day", br(),br(),
+                                                                                          "X13. You give up the things that you planning to do just because your friend says no", br(),br(),
+                                                                                          "X14. You think you do enough with your time", br(),br(),
+                                                                                          "X15. You are easy to get bored with your day-today activities", br(),br(),
+                                                                                          "X16. The important interests/activities in your life tend to change frequently", br(),br(),
+                                                                                          "X17. You know how much time you spend on each of the homework I do"),
+                                     title = "Question List",
+                                     height = "375px", width = 12,side = "right"),
+                  sidebarLayout(
                    sidebarPanel(h4("Support"), "An indication of how frequently the itemset appears in the dataset", br(),br(),
                                 h4("Confidence"), "An indication of how often the rule has been found to be true.", br(), br(),
                                 h4("Lift"), "The ratio of the observed support to that expected if X and Y were independent.", br(), br(),
@@ -204,7 +236,13 @@ server <- function(input, output) {
   observeEvent(input$openModal, {
     showModal(
       modalDialog(title = "About the Project",
-                  p("The webpage is RShiny with dashboardthemes library"),easyClose = TRUE, footer = NULL)
+                  p("This webpage is made for all individual who want to know their time management quality. 
+                    We conduct a mini test and try to specify your time management quality based on the model that we have already made from", 
+                    tags$a(href="https://www.kaggle.com/xiaowenlimarketing/international-student-time-management","Kaggle's Student Time Management Dataset"), 
+                    "We also provide you some recommendation on how to get a better time management quality and give information about some factors from our mini survey question that can lead to good or bad time management quality using Association rules method (Apriori Algorithm).
+                    Last but not least, we also provide a preview and exploratory data anlysis of the data, the way to determine number of clustering and the distribution result of clustering, and the visualization result for the association rules.", br(),br(),
+                    "Hope you enjoy this webpage and do not forget to make the best of your time, because in the end the only thing that we can not buy is 'time'", br(),br(),
+                    "Best Regards,",br(), tags$a(href="https://github.com/geraldbryan/Time-Management-Project", "Time Management Indicator Creator"),easyClose = TRUE, footer = NULL))
     )
   })
   
