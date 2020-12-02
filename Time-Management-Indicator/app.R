@@ -59,7 +59,7 @@ ui <- dashboardPagePlus(
             br(),
             div(style="text-align: center; height: 200px",imageOutput("image")),
             br(),
-            div(style="text-align: center;",h4("Dare to be a better time manager? Please take our survey and see yourself")),
+            div(style="text-align: center;",h4("Dare to be a better time manager? Please take our survey and be a better version of you!")),
             br(),
             div(tags$head(
               tags$style(HTML("
@@ -87,12 +87,8 @@ ui <- dashboardPagePlus(
       ),
       mainPanel(tabsetPanel(
         tabPanel("Result",br(),
-                 tabBox( tabPanel("",plotOutput("ori_clust")),
-                         title = "Original Clustering Plot",
-                         height = "450px", width = 12,side = "right"),
-                 #kasih text apa gitu
                  tabBox( tabPanel("",plotOutput("clustering"),
-                                  h6(p(strong("Note: * is your data")))),
+                                  h6(p(strong("Note: * is your result")))),
                          title = "Time Management Test Result",
                          height = "500px", width = 12,side = "right")),
         tabPanel("Recommendation", br(),
@@ -131,60 +127,44 @@ ui <- dashboardPagePlus(
                            plotOutput("score_gender")), br(),
                plotOutput("dist_plot")),
       
-      tabPanel("Clustering",splitLayout(plotOutput("elbow_plot"),
-                            plotlyOutput("boxplot_cluster")),
-                tabBox(h5("We use the 'Elbow method' to determine the number of clustering from this data.
-                           We have to select the value of 'k' at the “elbow” or the point after which the distortion/inertia start decreasing in a linear fashion.
-                           From the given plot above, we conclude the optimal number of cluster is 3, which are 'Good Time Management Quality', 'Bad Time Management Quality', and 'Normal Time Management Quality'",br(),br(),
-                tags$a(href="https://www.geeksforgeeks.org/elbow-method-for-optimal-value-of-k-in-kmeans/", "Source")),
-                    title = "",
-                    height = "300px", width = 12,side = "right"),
-),
+      tabPanel("Clustering",br(),sidebarLayout(
+                                  sidebarPanel("We use the 'Elbow method' to determine the number of clustering from this data.
+                                        We have to select the value of 'k' at the “elbow” or the point after which the distortion/inertia start decreasing in a linear fashion.
+                                        From the given plot above, we conclude the optimal number of cluster is 3, which are 'Good Time Management Quality', 'Bad Time Management Quality', and 'Normal Time Management Quality'",br(),br(),
+                                        tags$a(href="https://www.geeksforgeeks.org/elbow-method-for-optimal-value-of-k-in-kmeans/", "Source")),
+                                  mainPanel(plotOutput("elbow_plot"))),
+                            splitLayout(plotlyOutput("boxplot_cluster"),
+                                          tabBox(tabPanel("",plotOutput("ori_clust")),
+                                          title = "Original Clustering Plot",
+                                          height = "450px", width = 12,side = "right"))
+              ),
       
       navbarMenu("Association Rules",
                  tabPanel("Good Time Management", br(),
-                          tabBox(h6("X6. You often feel that your life is aimless, with no definite purpose", br(),br(),
-                                    "X7. You never have trouble organizing the things you have to do", br(),br(),
-                                    "X8. Once you've started an activity, you persist at it until you've completed it", br(),br(),
-                                    "X9. Sometimes you feel that the things you have to do during the day just don't seem to matter", br(),br(),
-                                    "X10. You will plan your activities from day to day", br(),br(),
-                                    "X11. You tend to leave things to the last minute", br(),br(),
-                                    "X12. You tend to change rather aimlessly from one activity to another during the day", br(),br(),
-                                    "X13. You give up the things that you planning to do just because your friend says no", br(),br(),
-                                    "X14. You think you do enough with your time", br(),br(),
-                                    "X15. You are easy to get bored with your day-today activities", br(),br(),
-                                    "X16. The important interests/activities in your life tend to change frequently", br(),br(),
-                                    "X17. You know how much time you spend on each of the homework I do"),
-                                 title = "Question List",
-                                 height = "375px", width = 12,side = "right"),
                   sidebarLayout(
                    sidebarPanel(h4("Support"), "An indication of how frequently the itemset appears in the dataset", br(),br(),
                                 h4("Confidence"), "An indication of how often the rule has been found to be true.", br(), br(),
                                 h4("Lift"), "The ratio of the observed support to that expected if X and Y were independent.", br(), br(),
-                                tags$a(href="https://en.wikipedia.org/wiki/Association_rule_learning", "Source")
-                   ) ,
+                                tags$a(href="https://en.wikipedia.org/wiki/Association_rule_learning", "Source")) ,
                    mainPanel(h3(style="text-align: center;", "Good Time Management Association Rules Result"),(div(style= "display: flex; justify-content: center;",tableOutput("asso_good_vis"))))),
-                   visNetworkOutput("good_vis_graph"), br(),
+                  h2("Question List"),h6("X6. You often feel that your life is aimless, with no definite purpose", br(),br(),
+                                         "X7. You never have trouble organizing the things you have to do", br(),br(),
+                                         "X8. Once you've started an activity, you persist at it until you've completed it", br(),br(),
+                                         "X9. Sometimes you feel that the things you have to do during the day just don't seem to matter", br(),br(),
+                                         "X10. You will plan your activities from day to day", br(),br(),
+                                         "X11. You tend to leave things to the last minute", br(),br(),
+                                         "X12. You tend to change rather aimlessly from one activity to another during the day", br(),br(),
+                                         "X13. You give up the things that you planning to do just because your friend says no", br(),br(),
+                                         "X14. You think you do enough with your time", br(),br(),
+                                         "X15. You are easy to get bored with your day-today activities", br(),br(),
+                                         "X16. The important interests/activities in your life tend to change frequently", br(),br(),
+                                         "X17. You know how much time you spend on each of the homework I do"), 
                    h3(style="background-color: MediumSeaGreen; color: white; text-align: center; height:35px;", "Good Time Management Association Rules Visualization"),
                    splitLayout(plotlyOutput("good_vis_scat"),
-                               plotOutput("good_vis_paracord")
-                   )
+                               plotOutput("good_vis_paracord")),
+                  visNetworkOutput("good_vis_graph")
                  ),
                  tabPanel("Bad Time Management",
-                          tabBox(h6("X6. You often feel that your life is aimless, with no definite purpose", br(),br(),
-                                                                                          "X7. You never have trouble organizing the things you have to do", br(),br(),
-                                                                                          "X8. Once you've started an activity, you persist at it until you've completed it", br(),br(),
-                                                                                          "X9. Sometimes you feel that the things you have to do during the day just don't seem to matter", br(),br(),
-                                                                                          "X10. You will plan your activities from day to day", br(),br(),
-                                                                                          "X11. You tend to leave things to the last minute", br(),br(),
-                                                                                          "X12. You tend to change rather aimlessly from one activity to another during the day", br(),br(),
-                                                                                          "X13. You give up the things that you planning to do just because your friend says no", br(),br(),
-                                                                                          "X14. You think you do enough with your time", br(),br(),
-                                                                                          "X15. You are easy to get bored with your day-today activities", br(),br(),
-                                                                                          "X16. The important interests/activities in your life tend to change frequently", br(),br(),
-                                                                                          "X17. You know how much time you spend on each of the homework I do"),
-                                     title = "Question List",
-                                     height = "375px", width = 12,side = "right"),
                   sidebarLayout(
                    sidebarPanel(h4("Support"), "An indication of how frequently the itemset appears in the dataset", br(),br(),
                                 h4("Confidence"), "An indication of how often the rule has been found to be true.", br(), br(),
@@ -192,10 +172,22 @@ ui <- dashboardPagePlus(
                                 tags$a(href="https://en.wikipedia.org/wiki/Association_rule_learning", "Source")
                    ) ,
                    mainPanel(h3(style="text-align: center;", "Bad Time Management Association Rules Result"),(div(style= "display: flex; justify-content: center;",tableOutput("asso_bad_vis"))))),
-                   visNetworkOutput("bad_vis_graph"), br(),
+                  h2("Question List"),h6("X6. You often feel that your life is aimless, with no definite purpose", br(),br(),
+                                 "X7. You never have trouble organizing the things you have to do", br(),br(),
+                                 "X8. Once you've started an activity, you persist at it until you've completed it", br(),br(),
+                                 "X9. Sometimes you feel that the things you have to do during the day just don't seem to matter", br(),br(),
+                                 "X10. You will plan your activities from day to day", br(),br(),
+                                 "X11. You tend to leave things to the last minute", br(),br(),
+                                 "X12. You tend to change rather aimlessly from one activity to another during the day", br(),br(),
+                                 "X13. You give up the things that you planning to do just because your friend says no", br(),br(),
+                                 "X14. You think you do enough with your time", br(),br(),
+                                 "X15. You are easy to get bored with your day-today activities", br(),br(),
+                                 "X16. The important interests/activities in your life tend to change frequently", br(),br(),
+                                 "X17. You know how much time you spend on each of the homework I do"), 
                    h3(style="background-color: MediumSeaGreen; color: white ;text-align: center; height:35px;", "Bad Time Management Association Rules Visualization"),
                    splitLayout(plotlyOutput("bad_vis_scat"),
-                               plotOutput("bad_vis_paracord"))
+                               plotOutput("bad_vis_paracord")),
+                  visNetworkOutput("bad_vis_graph")
                  )
       )))
   )
@@ -270,7 +262,7 @@ server <- function(input, output) {
       sliderTextInput("X16", "11. The important interests/activities in your life tend to change frequently",choices = c("Strong Disagree","Disagree","Neither","Agree","Strong Agree"),selected = "Neither"),br(),
       sliderTextInput("X17", "12. You know how much time you spend on each of the homework I do",choices = c("Strong Disagree","Disagree","Neither","Agree","Strong Agree"),selected = "Neither"),
       h6(p(strong("Note: We do not save your personal information and your answer, so do not be afraid to fill it!"))))),
-      callbackR = function(value) { shinyalert(paste("You have done your survey, please check 'Time Management Result Plot' below"))}
+      callbackR = function(value) { shinyalert(paste("You have done your survey, please check 'Time Management Result Plot'"))}
     ) }
   )
   
@@ -533,8 +525,8 @@ server <- function(input, output) {
   ## Plot clustering with new data
   plot_result <- reactive({ggplot(NULL,aes(x=Age,y=score))+
       geom_point(data=data_clus() , aes(col=data_clus()$cluster), position = jitter) +
-      geom_jitter(data = data_new(), aes(col=data_new()$cluster), shape=8, size=3, stroke=2) +
-      theme(legend.position = "none") +
+      geom_jitter(data = data_new(), aes(col=data_new()$cluster), shape=8, size=4, stroke=3) +
+      theme(legend.position = "bottom") +
       guides(fill=FALSE) +
       scale_colour_manual(name="Cluster", labels=c("Bad", "Good","Normal"),values=c("red","dark green", "gold")) +
       ggtitle("Clustering result") +
