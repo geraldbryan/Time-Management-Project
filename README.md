@@ -5,9 +5,13 @@ It already deployed on shiny app https://gerald.shinyapps.io/Time-Management-Ind
 
 ## Table of Contents 
 [1. Introduction](#Intro)
+
 [2. Exploratory Data Analysis](#EDA)
+
 [3. Clustering](#Cluster)
+
 [4. Association Rules](#Arules)
+
 [5. About Application](#App)
 
 <a name="Intro"></a>
