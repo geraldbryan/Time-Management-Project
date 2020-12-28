@@ -1,7 +1,6 @@
 # Time Management Indicator
 
-**Time management indicator** is an app that are created with R and have the purpose to help poeple out there to make the best of their time.
-It already deployed on shiny app https://gerald.shinyapps.io/Time-Management-Indicator/, check it out and hope it will help you to improve your time management :) 
+**Time management indicator** is an app created with R and can help people to make the best of their time. It already deployed on shiny app https://gerald.shinyapps.io/Time-Management-Indicator/, check it out and hope it will help you to improve your time management :)
 
 ## Table of Contents 
 [1. Introduction](#Intro)
@@ -16,52 +15,60 @@ It already deployed on shiny app https://gerald.shinyapps.io/Time-Management-Ind
 
 <a name="Intro"></a>
 ### Introduction
-**Time** is one of the things you cannot buy in life, everyone has the same amount of time each day but how we spend the time we have is up to ourselves. There is a quote that inspire me to make this time management app:
+**Time** is one of the things you cannot buy in life. Everyone has the same amount of time each day, but how we spend our time is up to us. There is a quote that inspires me to make this time management app:
+
 <br>
 > **"Time is what we want the most, but what we use worst."** <br> - William Penn
 
-The quote speaks for itself, we always say that we need more time to do something or we wish that we can turn back time because we regret not doing something in the past. Fortunately we have a soft skills called **time management**, if we masters it there is a higher chance we can us time more wisely than before.
+The quote speaks for itself. We always say that we need more time to do something, or we wish that we can turn back time because we regret not doing something in the past. Fortunately, we have a soft skill called **time management**. If we master it, there is a higher chance we can use time more wisely than before.
 
-**Time management** is one of the most important soft skills that everyone must have. According to [mindtools team](https://www.mindtools.com/pages/article/newHTE_00.htm), time management is the process of organizing and planning how to divide your time between specific activities. The most important thing taht many people misunderstood is **being busy is not same as being effective**, with a good time management skills we must do the work smarter not harder.
+**Time management** is one of the essential soft skills that everyone must-have. According to the [mindtools team](https://www.mindtools.com/pages/article/newHTE_00.htm), time management is organizing and planning how to divide your time between specific activities. The most important thing that many people misunderstood is **being busy is not the same as being effective**; with good time management skills, we must do the work smarter, not harder.
 
-There are some benefit when we try to learn about time management, such as greater productivity and efficiency, better professional reputation, less stress, increased opportunities for advancement, greater opportunities to achieve important life and career goals. Also, there are some things that we can eliminate such as missed deadlines, inefficient work flow, poor work quality, poor professional reputation and a stalled career.
+There is some benefit when we try to learn about time management, such as greater productivity and efficiency, better professional reputation, less stress, increased opportunities for advancement, more excellent opportunities to achieve meaningful life and career goals. Also, there are some things that we can eliminate, such as missed deadlines, inefficient workflow, low work quality, poor professional reputation, and a stalled career.
 
 <a name="EDA"></a>
 ### Exploratory Data Analysis
-This project use the dataset from [Kaggle's Students Time Management Datasets](https://www.kaggle.com/xiaowenlimarketing/international-student-time-management). The datasets were collected using questionnaire by the author, there are 12 questions that are related about time management. Also, there are other variables like age and gender that we used in this project. 
 
-From the datasets, the 12 question is answer by the likert scale of 1 to 5, where 1 is the worst and 5 is the best. At first we checked the **score distribution** to make sure it has a normal assumptions. 
+The datasets from [Kaggle's Students Time Management Datasets](https://www.kaggle.com/xiaowenlimarketing/international-student-time-management). were collected using a questionnaire with twelve questions are related to time management. Also, there are other variables like age and gender that we used in this project.
+
+The respondents answered the questions by the Likert scale with the range of one to five, where one is the worst and five is the best. At first, we checked the score distribution to make sure it has normal assumptions.
 
 ![score_dist](image/score_dist.png)
 
-From the distribution above, we can see the the distribution is normal with an outlier with score above 50 and we decided that it is okay to use this dataset for our as our model to determine the time management quality.
+From the result, we can see that the data is normally distributed with an outlier (a score above 50). We can use this dataset for the model to determine time management quality.
 
-After knowing the distribution of score, now let's see the age and gender statistics.
+After knowing the distribution of scores, now let's see the age and gender statistics.
 
 ![gender_age](image/age_gender.png)
 
-In the plot above we can see that the number of male and female is likely to be equal, but there are some significant difference in the matter of age. The majority of the respondent in the age of 21-25 and the least respondents are in the age above 25.
+In the plot above, we can see that the number of males and females is likely to be equal, but there are some significant age differences. The majority of the respondents in the group age of 21-25 and the least respondents are above 25.
 
 Let's see the gender and age of respondents based on the score of their questionnaire,
 
 ![gender_age_score](image/age_gender_score.png)
 
-From the plot above, it look like that female slightly has the higher score than the male in every group of age. The worst score is in the group of age 18-20, it is a obvious thing because generally teens will tend to spend their time more carelessly.
+The plot above looks like that female slightly has a higher score than the male in every group of age. The worst score is in the age of 18-20, and it is evident because generally, teens will tend to spend their time more carelessly.
 
-From the data exploratory of the datasets above, we can conclude that **age and gender affect the time management score of person**, but it is not a exact condition. There are a lot of factor that can affect time management quality besides ages and genders. So, if you in the group of age and gender which tend to get lower time management quality do not be insecure becasue it not defined who you are.
+From the data exploratory of the datasets above, we can conclude that age and gender affect a person's time management score, but it is not an exact condition. There are a lot of factors that can affect time management quality besides ages and genders. If you in the mentioned age and gender group, which tend to get lower time management quality, do not be insecure because it does not define who you are.
 
 <a name="Cluster"></a>
 ### Clustering
 
-For the clustering part to deterimine the time management quality, we used **K-Prototypes**, which is a clustering method which can handle a mixed type data. We used these algorithms instead of the famous K-means algorithms because most of our data is not numeric. The algorithms measures distance between numerical features using Euclidean distance (like K-means) but also measure the distance between categorical features using the number of matching categories.
+For the clustering part, to determine the time management quality, we used **K-Prototypes**, a clustering method that can handle mixed types of data. We used these algorithms instead of the famous K-means algorithms because most of our data is not numeric. The algorithms measure the distance between numerical features using Euclidean distance (like K-means) and measure the distance between categorical features using matching categories.
 
-Before we use the K-Prototypes algorithms, we try to determine the number of cluster using **Elbow Method**. **Elbow Method** consists of plotting the explained variation as a function of the number of clusters, and picking the elbow of the curve as the number of clusters to use.
+Before we use the K-Prototypes algorithms, we try to determine the number of clusters using the Elbow Method. **Elbow Method** consists of plotting the explained variation as a function of the number of clusters and picking the curve's elbow.
 
 ![elbow](image/elbow.png)
 
-From the result of the elbow method, we decide that the elbow of the curve is on number 3. Thus, we set the number of cluster is 3 and translate it to the time management quality which are **'Good Time Management Quality'**, **'Normal Time Management Quality'**, and **'Bad Time Management Quality'**.
+We decide that there is a sharp elbow of the curve is on number 3. Thus, we set the number of clusters into three time management qualities: 
 
-After obtaining the number of cluster, we begin to cluster the data and this is the result that we get,
+ - Good Time Management Quality
+ 
+ - Normal Time Management Quality
+ 
+ - Bad Time Management Quality
+
+After obtaining the number of clusters, we begin to cluster the data, and this is the result that we get,
 
 ![clust_ori](image/clust_ori.png)
 
