@@ -1,6 +1,6 @@
 # Time Management Indicator
 
-**Time management indicator** is an app created with R and can help people to make the best of their time. It already deployed on shiny app https://gerald.shinyapps.io/Time-Management-Indicator/, check it out and hope it will help you to improve your time management :)
+**Time management indicator** is an app created with R programming language and can help people to make the best of their time. It already deployed on shiny app https://gerald.shinyapps.io/Time-Management-Indicator/, check it out and hope it will help you to improve your time management :)
 
 ## Table of Contents 
 [1. Introduction](#Intro)
@@ -72,7 +72,7 @@ After obtaining the number of clusters, we begin to cluster the data, and this i
 
 ![clust_ori](image/clust_ori.png)
 
-From the graph, The majority of the group **Good Time Management Quality** with scores above 40, and it so evident that the higher the scores, the better the time management quality. Unfortunately, we were clustering or grouping the data depending on the scores and the answer to each question for the grouping. That will explain how there are some data with lower scores get the **Good Time Management Quality** and some data with higher scores get **Bad Time Management Quality** or **Normal Time Management Quality**
+From the graph, The majority of the group **Good Time Management Quality** with scores above 40, and it so evident that the higher the scores, the better the time management quality. Unfortunately, we were clustering or grouping the data depending on the scores and the answer to each question for the grouping. That will explain how some data with lower scores get the **Good Time Management Quality** and some data with higher scores get **Bad Time Management Quality** or **Normal Time Management Quality**
 
 If you wonder how we determine the name of the group, we will answer the question now. It is so apparent after seeing the questionnaires and how the score by Likert scale that the higher your scores, the higher your time management quality. Because of that, we made a boxplot of scores based on the group cluster to determine the group name, and we obtained this
 
@@ -83,12 +83,12 @@ We can see above that group number 2 has higher scores than the other two groups
 <a name="Arules"></a>
 ### Association Rules 
 
-You must wonder why we use the association rules in this kind of data. Are there any transactions in this data? doesn't it use to determine what product the customer will buy if they already buy one specific item? **Yes, that is true!** We will use that association rules algorithm and use it differently. In this project, we use association rules to determine what aspect leads to a **'Good Time Management Quality'** or **'Bad Time Management Quality.'** If you think it confusing to decide on the transaction data in this dataset, I will tell you it is not, **absolutely not.** We use the row as the transaction or one respondent as one transaction and the 12 questions, gender, and age as the items.
+You must wonder why we use the association rules method into the data. Are there any transactions in this data? doesn't its goal is determining what is the next product that the customer will buy if they already buy one specific item? **Yes, that is true!** We will use that association rules algorithm differently. In this project, association rules determine what aspect leads to a **'Good Time Management Quality'** or **'Bad Time Management Quality.'** If you think it confusing to decide on the transaction data in this dataset, I will tell you it is not, **absolutely not.** We use the row as the transaction or one respondent as one transaction and the twelve questions, gender, and age as the items.
 
 #### Bad Time Management Quality
 ![bad_arules](image/bad_arules.png)
 
-If you try the survey and fill the question shown above, you will produce a **Bad Time Management Quality**. And the plot below is the interactive visualization that you can try in the shiny apps.
+If you try the survey and fill the question shown above, you will produce a **Bad Time Management Quality**. And the plot below is the interactive visualization that you can try in the shiny app.
 
 ![bad_arules_vis](image/bad_arules_vis.png)
 
@@ -99,7 +99,7 @@ If you try the survey and fill the question shown above, you will produce Good T
 
 ![good_arules_vis](image/good_arules_vis.png)
 
-I will not explain more about the association rules algorithms because it will be out of the topic. If you want to understand how I use the association rules without transaction datasets, you can see here:  [Rpubs by me](https://rpubs.com/geraldbryan_/690426). Overall, we use the association rules because we want to show you what action leads to bad or good time management quality. So, all of you can eliminate the step that will lead to bad time management quality and keep doing the activities that will lead to good time management quality.
+I will not explain more about the association rules algorithms because it is beyond the scope of time management topic. If you want to understand how I use the association rules without transaction datasets, you can see here: [Rpubs by me](https://rpubs.com/geraldbryan_/690426). Overall, we use the association rules because we want to show you what action leads to bad or good time management quality. Then, you can eliminate any actions that will lead to bad time management quality and keep doing the activities that will lead to good time management quality.
 
 <a name="App"></a>
 ### About Application
@@ -107,7 +107,7 @@ I will not explain more about the association rules algorithms because it will b
 #### Landing Page
 ![landing](image/landing_page.png)
 
-Here is the landing page of the **Time Management Indicator** app. On this landing page, you can see an **about** menu in the top right corner, and you can click on it and see the summary, purpose, and sources of this app. Next to it is the **messages** from us to welcome you to the app. There are two buttons on the main page that, if you click, will show you what you can expect or what you can do in each menu.
+Here is the landing page of the **Time Management Indicator** app. On this landing page, you can see an **about** menu in the top right corner, and you can click on it and see the summary, purpose, and sources of this app. Next to it is the **messages** from us to welcome you to the app. There are two buttons on the main page that, if you click them, they will show you what you can expect or what you can do in each menu.
 
 #### Survey
 ![survey](image/survey.png)
@@ -115,7 +115,7 @@ Here is the landing page of the **Time Management Indicator** app. On this landi
 comment 1 here:
 Fill your details in the main page's lift side and then click 'Start Test,' and then it will bring you to the survey part.
 
-After finishing, fill out the 12 questions:
+After finishing, fill out the twelve questions:
 
 1. Click the OK button.
 
@@ -125,26 +125,26 @@ After finishing, fill out the 12 questions:
 
 ![question](image/question.png)
 
-After finishing fill out the 12 questions click **OK** button. Remember to be honest when you fill it, so you can get your actual result. Don't be hesitate to fill it, because we **do not keep your data**, after you close the app the data will be gone.
+After finishing fill out the twelve questions click **OK** button. Remember to be honest, so you can get your actual result. Don't be hesitate because we **do not keep your data**, after you close the app the data will be gone.
 
 ![result](image/result.png)
 
-After you fill it and click the ok button, then your result is shown in the plot. Your result will be shown in the shape of a bigger star, and whether you have good, normal, or bad time management quality can be determined by the color of the star.
+After you fill it and click the **OK** button, then your result is shown in the plot. Your result will be shown in the shape of a bigger star, and whether you have good, normal, or bad time management quality can be determined by its color.
 
 #### Recomendation
 ![recommendation](image/recommendation.png)
 
-There are three parts to this menu which is **Recommendation, Question List, and Association Rules**. For the recommendation part, we scrap the action that we can do to have a good time management quality. For more details, you can visit this [page](https://quickbooks.intuit.com/r/employee-management/time-management-tips/#:~:text=If%20you%20want%20to%20improve%20your%20time%20management,compare%20actual%20time%20spent%20and%20estimated%20time%20spent.). The **question list** list part is the supporting part of **Association Rules**, the association rules only shown like 'X6' or 'X8', so we provide the questions behind those variables. We include the association rules in the recommendation because we try to inform you of actions that lead to bad time management quality that you must avoid and actions that lead to good time management quality that you must maintain.
+There are three parts to this menu which is **Recommendation, Question List, and Association Rules**. For the recommendation part, we scrap the action that we can do to have a good time management quality. For more details, you can visit this [page](https://quickbooks.intuit.com/r/employee-management/time-management-tips/#:~:text=If%20you%20want%20to%20improve%20your%20time%20management,compare%20actual%20time%20spent%20and%20estimated%20time%20spent.). The **question list** part is the supporting part of **Association Rules**, the association rules only shown like 'X6' or 'X8', so we provide the questions' descriptions behind those variables. We include the association rules in the recommendation because we try to inform you of actions that lead to bad time management quality that you must avoid and actions that lead to good time management quality that you must maintain.
 
 #### Statistics
 The statistics menu will explain the dataset itself, which we already present in Exploratory Data Analysis, Clustering, and Association Rules parts, so I will not explain it more to avoid redundancy.
 
-## Enjoy
-I do not want you to take more time to read this, so just head to the shiny app, take the survey, and most important, Improve your time management quality no matter what groups you belong to based on our survey.
+## Enjoy!
+I do not want you to take more time to read this, so just head to the shiny app, take the survey, and most important, improve your time management quality no matter what groups you belong to based on our survey.
 
 <br>
 Lastly, I want to provide you with another quote that I like:
 
 > **"The bad news is time flies. The good news is you are the pilot"** <br> -Michael Altshuler
 
-Thank you for reading and use the app. If you have any feedback, feel free to contact us. Cheers to the better us! :)
+Thank you for reading and use the app. If you have any feedback, feel free to contact me. Cheers to the better us! :)
