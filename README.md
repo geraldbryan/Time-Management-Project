@@ -72,35 +72,34 @@ After obtaining the number of clusters, we begin to cluster the data, and this i
 
 ![clust_ori](image/clust_ori.png)
 
-From the graph, The majority of group **Good Time Management Quality** with scores above 40, and it so obvious thatthe higher the scores the better the time management quality. Unfortunaltely, how we clustering or grouping the data is not only by the scores that matters, but also the answer of each question is matter for the grouping. That will explained how there are some data with lower scores get the **Good Time Management Quality** and some data with higher scores get **Bad Time Management Quality** or **Normal Time Management Quality**
+From the graph, The majority of the group **Good Time Management Quality** with scores above 40, and it so evident that the higher the scores, the better the time management quality. Unfortunately, we were clustering or grouping the data depending on the scores and the answer to each question for the grouping. That will explain how there are some data with lower scores get the **Good Time Management Quality** and some data with higher scores get **Bad Time Management Quality** or **Normal Time Management Quality**
 
-If you wonder how we determine the name of group, we will answer the question now. It is so obvious after see the questionnaires and how it is score by likert scale that the higher your scores, the higher your time management quality. Because of that we made a boxplot of scores based on the group cluster to determine the group name, and we obtained this
+If you wonder how we determine the name of the group, we will answer the question now. It is so apparent after seeing the questionnaires and how the score by Likert scale that the higher your scores, the higher your time management quality. Because of that, we made a boxplot of scores based on the group cluster to determine the group name, and we obtained this
 
 ![clust_ori](image/clust_box.png)
 
-We can see above that the group number 2 has the higher scores than the other two groups, so we decided that the group number 2 as group of **'Good Time Management Quality'**.
-Also, we can see that group number 1 has the lowest score among all, so we decided that the group number 1 as group of **'Bad Time Management Quality'**. Last but not least, the group number 3 as group of **'Normal Time Management Quality'**
+We can see above that group number 2 has higher scores than the other two groups, so we decided that group number 2 as a group of **'Good Time Management Quality.'** We can also see that group number 1 has the lowest score among all, so we decided that group number 1 as a group of **'Bad Time Management Quality.'** Last but not least, group number 3 as a group of **'Normal Time Management Quality.'**
 
 <a name="Arules"></a>
 ### Association Rules 
 
-You must wonder why we use the association rules in this kind of data, what is the transaction of this data? doesn't it use to determine what product the customer will buy if they already buy one specific items? **Yes, that absolutely true**! We will use that association rules algorithm and use it differently. In this project we use association rules to determine what aspect lead to a **'Good Time Management Quality'** or **'Bad Time Management Quality'**. If you think it confusing to determine the transaction data in this dataset, I will tell you it is not, **absolutely not**. We use the row as the transaction or 1 respondent as 1 transaction and the 12 questions, gender, and age as the items.
+You must wonder why we use the association rules in this kind of data. Are there any transactions in this data? doesn't it use to determine what product the customer will buy if they already buy one specific item? **Yes, that is true!** We will use that association rules algorithm and use it differently. In this project, we use association rules to determine what aspect leads to a **'Good Time Management Quality'** or **'Bad Time Management Quality.'** If you think it confusing to decide on the transaction data in this dataset, I will tell you it is not, **absolutely not.** We use the row as the transaction or one respondent as one transaction and the 12 questions, gender, and age as the items.
 
 #### Bad Time Management Quality
 ![bad_arules](image/bad_arules.png)
 
-If you try the survey and fill the question like what it has shown above you will definitely will produce a **Bad Time Management Quality**. And the plot below is the interactive visualization that you can try in the shiny apps
+If you try the survey and fill the question shown above, you will produce a **Bad Time Management Quality**. And the plot below is the interactive visualization that you can try in the shiny apps.
 
 ![bad_arules_vis](image/bad_arules_vis.png)
 
 #### Good Time Management Quality
 ![good_arules](image/good_arules.png)
 
-If you try the survey and fill the question like what it has shown above you will definitely will produce a **Good Time Management Quality**. And the plot below is the interactive visualization that you can try in the shiny apps
+If you try the survey and fill the question shown above, you will produce Good Time Management Quality. And the plot below is the interactive visualization that you can try in the app!
 
 ![good_arules_vis](image/good_arules_vis.png)
 
-I will not explain more about the association rules algorithms because it will be out of the topic. If you want to understand about how I use the association rules without transaction datasets you can see this [Rpubs by me](https://rpubs.com/geraldbryan_/690426). Overall why we use the association rules is, we want to show you what action lead to bad or good time management quality. So, all of you can eliminate the action that will lead to bad time management quality and keep doing the action that will lead to good time management quality.
+I will not explain more about the association rules algorithms because it will be out of the topic. If you want to understand how I use the association rules without transaction datasets, you can see here:  [Rpubs by me](https://rpubs.com/geraldbryan_/690426). Overall, we use the association rules because we want to show you what action leads to bad or good time management quality. So, all of you can eliminate the step that will lead to bad time management quality and keep doing the activities that will lead to good time management quality.
 
 <a name="App"></a>
 ### About Application
@@ -108,12 +107,21 @@ I will not explain more about the association rules algorithms because it will b
 #### Landing Page
 ![landing](image/landing_page.png)
 
-This is the landing page of **Time Management Indicator** app, in this landing page you can see there is an **about** menu in the top right corner, you can clik to it and see the summary, purpose, and sources of this app. Next to it, is the **messages** from us to welcome you in the app. In the main page there are two **buttons** that if you clik, it will show you what can you expect or what can you do in each menu.
+Here is the landing page of the **Time Management Indicator** app. On this landing page, you can see an **about** menu in the top right corner, and you can click on it and see the summary, purpose, and sources of this app. Next to it is the **messages** from us to welcome you to the app. There are two buttons on the main page that, if you click, will show you what you can expect or what you can do in each menu.
 
 #### Survey
 ![survey](image/survey.png)
 
-Do not be afraid that the app is error or cannot work, **It is not**. It shown an error because the input data haven't been input yet, so the plot is not shown. Fill your details in the lift side of the main page and the clik **'Start Test'**, and the it will bring you to the survey part.
+comment 1 here:
+Fill your details in the main page's lift side and then click 'Start Test,' and then it will bring you to the survey part.
+
+After finishing, fill out the 12 questions:
+
+1. Click the OK button.
+
+2. Remember to be honest when you fill it so that you can get your actual result.
+
+3. Don't be hesitate to fill it, because we do not keep your data. After you close the app, the data will be gone.
 
 ![question](image/question.png)
 
@@ -121,21 +129,22 @@ After finishing fill out the 12 questions click **OK** button. Remember to be ho
 
 ![result](image/result.png)
 
-After you fill it and click ok button, then your result is shown in the plot. Your result will be shown in the shape of star, and whether you have good, normal, or bad time management quality can be determine by the colour of the star.
+After you fill it and click the ok button, then your result is shown in the plot. Your result will be shown in the shape of a bigger star, and whether you have good, normal, or bad time management quality can be determined by the color of the star.
 
 #### Recomendation
 ![recommendation](image/recommendation.png)
 
-There are three parts in this menu which is **Recommendation**, **Question List**, and **Association Rules**. For the recommendation part we scrap the action that we can do to have a good time management quality, for more details you can visit this [page](https://quickbooks.intuit.com/r/employee-management/time-management-tips/#:~:text=If%20you%20want%20to%20improve%20your%20time%20management,compare%20actual%20time%20spent%20and%20estimated%20time%20spent.). The **question list** part is the supporting part of **Association Rules**, the association rules only shown like 'X6' or 'X8', so we provide the questions behind those variables. We include the association rules in recommendation because we try to inform you action that lead to bad time management quality that you must avoid and action that lead to good time management quality that you must maintain.
+There are three parts to this menu which is **Recommendation, Question List, and Association Rules**. For the recommendation part, we scrap the action that we can do to have a good time management quality. For more details, you can visit this [page](https://quickbooks.intuit.com/r/employee-management/time-management-tips/#:~:text=If%20you%20want%20to%20improve%20your%20time%20management,compare%20actual%20time%20spent%20and%20estimated%20time%20spent.). The **question list** list part is the supporting part of **Association Rules**, the association rules only shown like 'X6' or 'X8', so we provide the questions behind those variables. We include the association rules in the recommendation because we try to inform you of actions that lead to bad time management quality that you must avoid and actions that lead to good time management quality that you must maintain.
 
 #### Statistics
-In the statistics menu it will explain about the dataset itself which we already explain it in **Exploratory Data Analysis**, **Clustering**, and **Association Rules** parts, so I will not explain it more to avoid redundancy.
+The statistics menu will explain the dataset itself, which we already present in Exploratory Data Analysis, Clustering, and Association Rules parts, so I will not explain it more to avoid redundancy.
 
 ## Enjoy
-I do not want you to take more time to read this, so just head to the shiny app, take the survey, and most important **Improve your time management quality** no matter of what groups you belong based on our survey. 
+I do not want you to take more time to read this, so just head to the shiny app, take the survey, and most important, Improve your time management quality no matter what groups you belong to based on our survey.
+
 <br>
 Lastly, I want to provide you with another quote that I like:
 
 > **"The bad news is time flies. The good news is you are the pilot"** <br> -Michael Altshuler
 
-Thank you for read and use the apps, if you have any feedback feel free to contact us, cheers to the better us! :)
+Thank you for reading and use the app. If you have any feedback, feel free to contact us. Cheers to the better us! :)
