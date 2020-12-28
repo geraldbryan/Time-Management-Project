@@ -16,9 +16,9 @@
 <a name="Intro"></a>
 ### Introduction
 **Time** is one of the things you cannot buy in life. Everyone has the same amount of time each day, but how we spend our time is up to us. There is a quote that inspires me to make this time management app:
-
 <br>
 > **"Time is what we want the most, but what we use worst."** <br> - William Penn
+
 
 The quote speaks for itself. We always say that we need more time to do something, or we wish that we can turn back time because we regret not doing something in the past. Fortunately, we have a soft skill called **time management**. If we master it, there is a higher chance we can use time more wisely than before.
 
