@@ -38,31 +38,35 @@ The author of the dataset create this dataset using a questionnaire,therefore we
 
 ![gender_age](image/age_gender.png)
 
- From the plot above, we can see that the majority of the respondents are in the group age of 21-25 years old and followed by the group age of 18-21 years old and group age above 25 years old respectively. It may be a slightly setbacks because the data did not have a large range of age, so we decided to group it and use that grouping of age to make the model. 
+ From the plot above, we can see that the order of the group of age from many to least are:
+ 1. The group age of 21-25 years old  
+ 2. The group age of 18-21 years old 
+ 3. The group age above 25 years old 
+ 
+ It may be a slightly setbacks because the data did not have a large range of age, so we decided to group it and use that grouping of age to make the model. 
  
  In the matter of gender, it seems the number of female and male respondents are pretty equal. So, if we make the model use this data it is not gender's bias and can be a pretty good model.
 
- After talking about the gender and age of the respondents, next we'll move into the question's part. We have done some feature engineer to the data and make one additional variable, which is **score**. 
- 
- The questions have a likert scale answers, in the scale of 1-5. We use the scale to make the 'score' variable by adding all the answers, which will get us a maximum score of 60 and minimum score of 12 and here is the distribution:
+ After talking about the gender and age of the respondents, next we'll move into the question's part. We have done some feature engineer to the data and make one additional variable, which is **score**. The questions have a likert scale answers, in the scale of 1-5. We use the scale to make the 'score' variable by adding all the answers, which will get us a maximum score of 60 and minimum score of 12 and here is the distribution:
 
 ![score_dist](image/score_dist.png) 
 
 Fortunately, the distribution is quite good, so we can use this data to build the model. :partying_face:
+<br>
 It seems the data is normally distributed, but there is an outlier (a score above 50).
 
 For the last EDA part, we will check the boxplot of the score based on age and gender.
 
 ![gender_age_score](image/age_gender_score.png)
 
-*The plot above looks like that female slightly has a higher score than the male in every group of age,
-*The worst score is in the age of 18-20,
-*The highest score of female is in the group age of 21-25 and male in the group age above 25.
+Markup :*The plot above looks like that female slightly has a higher score than the male in every group of age,
+        *The worst score is in the age of 18-20,
+        *The highest score of female is in the group age of 21-25 and male in the group age above 25.
 
  **For the conclusion of this part we will give you three important points:**
- *Age and Gender affect time management scores
- *The score distribution is normally distributed
- *There is an equal number of each gender
+ Markup :*Age and Gender affect time management scores
+         *The score distribution is normally distributed
+         *There is an equal number of each gender
 
 <a name="Cluster"></a>
 ## Clustering
