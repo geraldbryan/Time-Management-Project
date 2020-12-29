@@ -5,10 +5,6 @@
 <br>
 It already deployed to shiny, just click this link to be the better you:  https://gerald.shinyapps.io/Time-Management-Indicator/
 
- Markup : * Bullet list
-              * Nested bullet
-                  * Sub-nested bullet etc
-          * Bullet list item 2
 ## Table of Contents 
 [1. Introduction](#Intro)
 
@@ -63,9 +59,9 @@ For the last EDA part, we will check the boxplot of the score based on age and g
 
 ![gender_age_score](image/age_gender_score.png)
 
-Markup :* The plot above looks like that female slightly has a higher score than the male in every group of age,
-        * The worst score is in the age of 18-20,
-        * The highest score of female is in the group age of 21-25 and male in the group age above 25.
+* The plot above looks like that female slightly has a higher score than the male in every group of age,
+* The worst score is in the age of 18-20,
+* The highest score of female is in the group age of 21-25 and male in the group age above 25.
 
  **For the conclusion of this part we will give you three important points:**
          * Age and Gender affect time management scores
