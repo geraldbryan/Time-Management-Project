@@ -5,6 +5,10 @@
 <br>
 It already deployed to shiny, just click this link to be the better you:  https://gerald.shinyapps.io/Time-Management-Indicator/
 
+ Markup : * Bullet list
+              * Nested bullet
+                  * Sub-nested bullet etc
+          * Bullet list item 2
 ## Table of Contents 
 [1. Introduction](#Intro)
 
