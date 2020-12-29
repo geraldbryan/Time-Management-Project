@@ -1,8 +1,7 @@
 # Time Management Indicator
 
 **Time management indicator** is an app created to help you assess your time management quality, and also give you some recommendation to make it better.
-<br>
-<br>
+
 It already deployed to shiny, just click this link to be the better you:  https://gerald.shinyapps.io/Time-Management-Indicator/
 
 ## Table of Contents 
