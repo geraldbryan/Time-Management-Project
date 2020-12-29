@@ -71,9 +71,12 @@ For the last EDA part, we will check the boxplot of the score based on age and g
 <a name="Cluster"></a>
 ## Clustering
 
-For the clustering part, to determine the time management quality, we used **K-Prototypes**, a clustering method that can handle mixed types of data. We used these algorithms instead of the famous K-means algorithms because most of our data is not numeric. The algorithms measure the distance between numerical features using Euclidean distance (like K-means) and measure the distance between categorical features using matching categories.
+For the clustering part, we used **K-Prototypes** to determine the time management quality.
 
-Before we use the K-Prototypes algorithms, we try to determine the number of clusters using the Elbow Method. **Elbow Method** consists of plotting the explained variation as a function of the number of clusters and picking the curve's elbow.
+We use **K-Prototypes** method because the algorithm is similiar with the famous clustering method (K-means), but the advantage of this method is, it can be used for mixed type data which what our data look likes now.
+
+
+Before do the clustering part, we try to determine the number of clusters using the Elbow Method. **Elbow Method** consists of plotting the explained variation as a function of the number of clusters, the number of cluster is on he elbow of the curve.
 
 ![elbow](image/elbow.png)
 
@@ -89,13 +92,18 @@ After obtaining the number of clusters, we begin to cluster the data, and this i
 
 ![clust_ori](image/clust_ori.png)
 
-From the graph, The majority of the group **Good Time Management Quality** with scores above 40, and it so evident that the higher the scores, the better the time management quality. Unfortunately, we were clustering or grouping the data depending on the scores and the answer to each question for the grouping. That will explain how some data with lower scores get the **Good Time Management Quality** and some data with higher scores get **Bad Time Management Quality** or **Normal Time Management Quality**
+From the graph, if you look at the group of **Good Time Management Quality**, it has a higher scores (above 40), and it seems that the higher the scores, the better the time management quality.
 
-If you wonder how we determine the name of the group, we will answer the question now. It is so apparent after seeing the questionnaires and how the score by Likert scale that the higher your scores, the higher your time management quality. Because of that, we made a boxplot of scores based on the group cluster to determine the group name, and we obtained this
+But that is not the case, we were clustering or grouping the data not only depending on the scores but also the answer to each question for the grouping. That will explain how some data with lower scores get the **Good Time Management Quality** and some data with higher scores get **Bad Time Management Quality** or **Normal Time Management Quality**.
+
+We determine the name of the group based on the boxplot of scores according to the group cluster to determine the group name
 
 ![clust_ori](image/clust_box.png)
 
-We can see above that group number 2 has higher scores than the other two groups, so we decided that group number 2 as a group of **'Good Time Management Quality.'** We can also see that group number 1 has the lowest score among all, so we decided that group number 1 as a group of **'Bad Time Management Quality.'** Last but not least, group number 3 as a group of **'Normal Time Management Quality.'**
+We manually name it from the boxplot above from higher score to lower score as:
+* Group number 2 (has the highest scores) as a group of **'Good Time Management Quality'**. 
+* group number 3 (has score between grou 1 and 3) as a group of **'Normal Time Management Quality.'**
+* Group number 1 (has the lowest scores) as a group of **'Bad Time Management Quality'**.
 
 <a name="Arules"></a>
 ## Association Rules 
@@ -124,12 +132,18 @@ I will not explain more about the association rules algorithms because it is bey
 #### Landing Page
 ![landing](image/landing_page.png)
 
-Here is the landing page of the **Time Management Indicator** app. On this landing page, you can see an **about** menu in the top right corner, and you can click on it and see the summary, purpose, and sources of this app. Next to it is the **messages** from us to welcome you to the app. There are two buttons on the main page that, if you click them, they will show you what you can expect or what you can do in each menu.
+Here is the landing page of the **Time Management Indicator** app. What you can do in the home page?
+* **About** menu (in the top right corner) : See the summary, purpose, and sources of this app. 
+* **Messages** : Welcoming messages from us to welcome you. 
+* **Statistics** : See what it shown in statistics menu.
+* **Survey** : See what it shown in survey menu.
 
 #### Survey
 ![survey](image/survey.png)
 
 Fill your details in the main page's lift side and then click 'Start Test,' and then it will bring you to the survey part.
+
+![question](image/question.png)
 
 After finishing, fill out the twelve questions:
 
@@ -139,26 +153,37 @@ After finishing, fill out the twelve questions:
 
 3. Don't be hesitate to fill it, because we do not keep your data. After you close the app, the data will be gone.
 
-![question](image/question.png)
-
-After finishing fill out the twelve questions click **OK** button. Remember to be honest, so you can get your actual result. Don't be hesitate because we **do not keep your data**, after you close the app the data will be gone.
+4. Your result will be shown as a ' * ' shape. See the example below,
 
 ![result](image/result.png)
-
-After you fill it and click the **OK** button, then your result is shown in the plot. Your result will be shown in the shape of a bigger star, and whether you have good, normal, or bad time management quality can be determined by its color.
 
 #### Recommendation
 ![recommendation](image/recommendation.png)
 
-There are three parts to this menu which is **Recommendation, Question List, and Association Rules**. For the recommendation part, we scrap the action that we can do to have a good time management quality. For more details, you can visit this [page](https://quickbooks.intuit.com/r/employee-management/time-management-tips/#:~:text=If%20you%20want%20to%20improve%20your%20time%20management,compare%20actual%20time%20spent%20and%20estimated%20time%20spent.). The **question list** part is the supporting part of **Association Rules**, the association rules only shown like 'X6' or 'X8', so we provide the questions' descriptions behind those variables. We include the association rules in the recommendation because we try to inform you of actions that lead to bad time management quality that you must avoid and actions that lead to good time management quality that you must maintain.
+There are three parts to this menu:
+* **Recommendation**
+  In the recommendation part, we use the recommendation from the expert (you can see the detail from this [page](https://quickbooks.intuit.com/r/employee-management/time-   management-tips/#:~:text=If%20you%20want%20to%20improve%20your%20time%20management,compare%20actual%20time%20spent%20and%20estimated%20time%20spent.) to make you have the better time manager. There are some example of recommendations or tips like 'create a daily task', 'prioritize your task', and 'avoid multitasking' that will improve your time management quality. 
+* **Question List**
+  The question list in this menu is to support the 'Factor that Impact your Time Management Quality' part. In this part we provide the question descriptions behind hte variable 'X1' through 'X12'.
+  
+* **Factor that Impact your Time Management Quality**.  
+  In this part, we use the association rules model to encourage you what the answer will bring you to be in a 'Good Time Management Quality' or 'Bad Time Management Quality'. Besides that, it can be used as the recommendation too.
+  
+  This is how you read the result : In the 'LHS' column is what the action that will trigger you to get the result in 'RHS' column.  
+  
+  I will explain it step by step:
+  1. See the 'LHS' part, in the first example it has 'X6 : Strong Disagree' and 'X8 : Agree',
+  2. Go the the Question list and check what the question decsription between 'X6' and 'X8',
+  3. See the 'RHS' part, we get the result of 'Good'. (It means that if we agree on 'X8' and Strong Disagree on 'X6', we will more likely to have a good time management quality)
+  4. Implement it in real life! (It is a must :wink:)
 
 #### Statistics
-The statistics menu will explain the dataset itself, which we already present in Exploratory Data Analysis, Clustering, and Association Rules parts, so I will not explain it more to avoid redundancy.
+In this menu we divide it into two big menu which are [clustering](#Cluster) and [Association rules](#Arules). It consist all of what we have been explained in the clustering and Association rules part.
 
 ## Enjoy!
 I do not want you to take more time to read this, so just head to the shiny app, take the survey, and most important, improve your time management quality no matter what groups you belong to based on our survey.
 
-<br>
+
 Lastly, I want to provide you with another quote that I like:
 
 > **"The bad news is time flies. The good news is you are the pilot"** <br> -Michael Altshuler
