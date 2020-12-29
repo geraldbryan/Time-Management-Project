@@ -22,36 +22,47 @@ It already deployed to shiny, just click this link to be the better you:  https:
 <br>
 > **"Time is what we want the most, but what we use worst."** <br> - William Penn
 
-The quote speaks for itself. We always say that we need more time to do something, or we wish that we can turn back time because we regret not doing something in the past.
+The quote speaks for itself, we always say that we need more time to do something or we wish that we can turn back time because we regret not doing something in the past.
 <br>
 
-Because of that reason, we decided to make this app so you and hopefully all people will be a 'good' time manager for your time. :wink:
-
+Because of those reasons, we decided to make this app so you and hopefully all people will be a 'good' time manager for your time. :wink:
 
 <a name="EDA"></a>
 ## Exploratory Data Analysis
 
-The datasets from [Kaggle's Students Time Management Datasets](https://www.kaggle.com/xiaowenlimarketing/international-student-time-management). were collected using a questionnaire with twelve questions are related to time management. Also, there are other variables like age and gender that we used in this project.
+We use the datasets from [Kaggle's Students Time Management Datasets](https://www.kaggle.com/xiaowenlimarketing/international-student-time-management) for this project.
 
-The respondents answered the questions by the Likert scale with the range of one to five, where one is the worst and five is the best. At first, we checked the score distribution to make sure it has normal assumptions.
+Before we use it to make a model for assess your time management quality and the recommendation, it is very important to take a little look how is the data. Therefore I will start this project with the 'EDA' part.
 
-![score_dist](image/score_dist.png)
-
-From the result, we can see that the data is normally distributed with an outlier (a score above 50). We can use this dataset for the model to determine time management quality.
-
-After knowing the distribution of scores, now let's see the age and gender statistics.
+The author of the dataset create this dataset using a questionnaire,therefore we'll strat the EDA part with the common parameters, which are age and gender.
 
 ![gender_age](image/age_gender.png)
 
-In the plot above, we can see that the number of males and females is likely to be equal, but there are some significant age differences. The majority of the respondents in the group age of 21-25 and the least respondents are above 25.
+ From the plot above, we can see that the majority of the respondents are in the group age of 21-25 years old and followed by the group age of 18-21 years old and group age above 25 years old respectively. It may be a slightly setbacks because the data did not have a large range of age, so we decided to group it and use that grouping of age to make the model. 
+ 
+ In the matter of gender, it seems the number of female and male respondents are pretty equal. So, if we make the model use this data it is not gender's bias and can be a pretty good model.
 
-Let's see the gender and age of respondents based on the score of their questionnaire,
+ After talking about the gender and age of the respondents, next we'll move into the question's part. We have done some feature engineer to the data and make one additional variable, which is **score**. 
+ 
+ The questions have a likert scale answers, in the scale of 1-5. We use the scale to make the 'score' variable by adding all the answers, which will get us a maximum score of 60 and minimum score of 12 and here is the distribution:
+
+![score_dist](image/score_dist.png) 
+
+Fortunately, the distribution is quite good, so we can use this data to build the model. :partying_face:
+It seems the data is normally distributed, but there is an outlier (a score above 50).
+
+For the last EDA part, we will check the boxplot of the score based on age and gender.
 
 ![gender_age_score](image/age_gender_score.png)
 
-The plot above looks like that female slightly has a higher score than the male in every group of age. The worst score is in the age of 18-20, and it is evident because generally, teens will tend to spend their time more carelessly.
+*The plot above looks like that female slightly has a higher score than the male in every group of age,
+*The worst score is in the age of 18-20,
+*The highest score of female is in the group age of 21-25 and male in the group age above 25.
 
-From the data exploratory of the datasets above, we can conclude that age and gender affect a person's time management score, but it is not an exact condition. There are a lot of factors that can affect time management quality besides ages and genders. If you in the mentioned age and gender group, which tend to get lower time management quality, do not be insecure because it does not define who you are.
+ **For the conclusion of this part we will give you three important points:**
+ *Age and Gender affect time management scores
+ *The score distribution is normally distributed
+ *There is an equal number of each gender
 
 <a name="Cluster"></a>
 ## Clustering
