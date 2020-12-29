@@ -161,7 +161,7 @@ After finishing, fill out the twelve questions:
 
 There are three parts to this menu:
 * **Recommendation**
-  In the recommendation part, we use the recommendation from the expert (you can see the detail from this [page](https://quickbooks.intuit.com/r/employee-management/time-   management-tips/#:~:text=If%20you%20want%20to%20improve%20your%20time%20management,compare%20actual%20time%20spent%20and%20estimated%20time%20spent.) to make you have the better time manager. There are some example of recommendations or tips like 'create a daily task', 'prioritize your task', and 'avoid multitasking' that will improve your time management quality. 
+  In the recommendation part, we use the recommendation from the expert (you can see the detail from this [page](https://quickbooks.intuit.com/r/employee-management/time-   management-tips/#:~:text=If%20you%20want%20to%20improve%20your%20time%20management,compare%20actual%20time%20spent%20and%20estimated%20time%20spent.)) to make you have the better time manager. There are some example of recommendations or tips like 'create a daily task', 'prioritize your task', and 'avoid multitasking' that will improve your time management quality. 
 * **Question List**
   The question list in this menu is to support the 'Factor that Impact your Time Management Quality' part. In this part we provide the question descriptions behind hte variable 'X1' through 'X12'.
   
