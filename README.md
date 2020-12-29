@@ -1,6 +1,8 @@
 # Time Management Indicator
 
-**Time management indicator** is an app created with R programming language and can help people to make the best of their time. It already deployed on shiny app https://gerald.shinyapps.io/Time-Management-Indicator/, check it out and hope it will help you to improve your time management :)
+**Time management indicator** is an app created to help you assess your time management quality, and also give you some recommendation to make it better.
+<br>
+It already deployed to shiny, just click this link to be the better you:  https://gerald.shinyapps.io/Time-Management-Indicator/
 
 ## Table of Contents 
 [1. Introduction](#Intro)
@@ -14,20 +16,18 @@
 [5. About Application](#App)
 
 <a name="Intro"></a>
-### Introduction
+## Introduction
 **Time** is one of the things you cannot buy in life. Everyone has the same amount of time each day, but how we spend our time is up to us. There is a quote that inspires me to make this time management app:
 <br>
 > **"Time is what we want the most, but what we use worst."** <br> - William Penn
 
+The quote speaks for itself. We always say that we need more time to do something, or we wish that we can turn back time because we regret not doing something in the past.
+<br>
+Because of that reason, we decided to make this app so you and hopefully all people will be a 'good' time manager for your time. :wink:
 
-The quote speaks for itself. We always say that we need more time to do something, or we wish that we can turn back time because we regret not doing something in the past. Fortunately, we have a soft skill called **time management**. If we master it, there is a higher chance we can use time more wisely than before.
-
-**Time management** is one of the essential soft skills that everyone must-have. According to the [mindtools team](https://www.mindtools.com/pages/article/newHTE_00.htm), time management is organizing and planning how to divide your time between specific activities. The most important thing that many people misunderstood is **being busy is not the same as being effective**; with good time management skills, we must do the work smarter, not harder.
-
-There is some benefit when we try to learn about time management, such as greater productivity and efficiency, better professional reputation, less stress, increased opportunities for advancement, more excellent opportunities to achieve meaningful life and career goals. Also, there are some things that we can eliminate, such as missed deadlines, inefficient workflow, low work quality, poor professional reputation, and a stalled career.
 
 <a name="EDA"></a>
-### Exploratory Data Analysis
+## Exploratory Data Analysis
 
 The datasets from [Kaggle's Students Time Management Datasets](https://www.kaggle.com/xiaowenlimarketing/international-student-time-management). were collected using a questionnaire with twelve questions are related to time management. Also, there are other variables like age and gender that we used in this project.
 
@@ -52,7 +52,7 @@ The plot above looks like that female slightly has a higher score than the male 
 From the data exploratory of the datasets above, we can conclude that age and gender affect a person's time management score, but it is not an exact condition. There are a lot of factors that can affect time management quality besides ages and genders. If you in the mentioned age and gender group, which tend to get lower time management quality, do not be insecure because it does not define who you are.
 
 <a name="Cluster"></a>
-### Clustering
+## Clustering
 
 For the clustering part, to determine the time management quality, we used **K-Prototypes**, a clustering method that can handle mixed types of data. We used these algorithms instead of the famous K-means algorithms because most of our data is not numeric. The algorithms measure the distance between numerical features using Euclidean distance (like K-means) and measure the distance between categorical features using matching categories.
 
@@ -81,7 +81,7 @@ If you wonder how we determine the name of the group, we will answer the questio
 We can see above that group number 2 has higher scores than the other two groups, so we decided that group number 2 as a group of **'Good Time Management Quality.'** We can also see that group number 1 has the lowest score among all, so we decided that group number 1 as a group of **'Bad Time Management Quality.'** Last but not least, group number 3 as a group of **'Normal Time Management Quality.'**
 
 <a name="Arules"></a>
-### Association Rules 
+## Association Rules 
 
 You must wonder why we use the association rules method into the data. Are there any transactions in this data? doesn't its goal is determining what is the next product that the customer will buy if they already buy one specific item? **Yes, that is true!** We will use that association rules algorithm differently. In this project, association rules determine what aspect leads to a **'Good Time Management Quality'** or **'Bad Time Management Quality.'** If you think it confusing to decide on the transaction data in this dataset, I will tell you it is not, **absolutely not.** We use the row as the transaction or one respondent as one transaction and the twelve questions, gender, and age as the items.
 
@@ -102,7 +102,7 @@ If you try the survey and fill the question shown above, you will produce Good T
 I will not explain more about the association rules algorithms because it is beyond the scope of time management topic. If you want to understand how I use the association rules without transaction datasets, you can see here: [Rpubs by me](https://rpubs.com/geraldbryan_/690426). Overall, we use the association rules because we want to show you what action leads to bad or good time management quality. Then, you can eliminate any actions that will lead to bad time management quality and keep doing the activities that will lead to good time management quality.
 
 <a name="App"></a>
-### About Application
+## About Application
 
 #### Landing Page
 ![landing](image/landing_page.png)
@@ -112,7 +112,6 @@ Here is the landing page of the **Time Management Indicator** app. On this landi
 #### Survey
 ![survey](image/survey.png)
 
-comment 1 here:
 Fill your details in the main page's lift side and then click 'Start Test,' and then it will bring you to the survey part.
 
 After finishing, fill out the twelve questions:
