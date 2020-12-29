@@ -64,9 +64,9 @@ For the last EDA part, we will check the boxplot of the score based on age and g
 * The highest score of female is in the group age of 21-25 and male in the group age above 25.
 
  **For the conclusion of this part we will give you three important points:**
-         * Age and Gender affect time management scores
-         * The score distribution is normally distributed
-         * There is an equal number of each gender
+* Age and Gender affect time management scores
+* The score distribution is normally distributed
+* There is an equal number of each gender
 
 <a name="Cluster"></a>
 ## Clustering
