@@ -2,6 +2,7 @@
 
 **Time management indicator** is an app created to help you assess your time management quality, and also give you some recommendation to make it better.
 <br>
+<br>
 It already deployed to shiny, just click this link to be the better you:  https://gerald.shinyapps.io/Time-Management-Indicator/
 
 ## Table of Contents 
@@ -23,6 +24,7 @@ It already deployed to shiny, just click this link to be the better you:  https:
 
 The quote speaks for itself. We always say that we need more time to do something, or we wish that we can turn back time because we regret not doing something in the past.
 <br>
+
 Because of that reason, we decided to make this app so you and hopefully all people will be a 'good' time manager for your time. :wink:
 
 
