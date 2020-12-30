@@ -17,7 +17,7 @@ It already deployed to shiny, just click this link to be the better you:  https:
 
 <a name="Intro"></a>
 ## Introduction
-**Time** is one of the things you cannot buy in life. Everyone has the same amount of time each day, but how we spend our time is up to us. There is a quote that inspires me to make this time management app:
+**Time** is one of the things you cannot buy in life. Everyone has the same amount of time each day, but how we spend our time is up to ourselves. There is a quote that inspires me to make this time management app:
 <br>
 > **"Time is what we want the most, but what we use worst."** <br> - William Penn
 
@@ -94,7 +94,7 @@ From the graph, if you look at the group of **Good Time Management Quality**, it
 
 But that is not the case, we were clustering or grouping the data not only depending on the scores but also the answer to each question for the grouping. That will explain how some data with lower scores get the **Good Time Management Quality** and some data with higher scores get **Bad Time Management Quality** or **Normal Time Management Quality**.
 
-We determine the name of the group based on the boxplot of scores according to the group cluster to determine the group name
+We determine the name of the group based on the boxplot of scores according to the group cluster,
 
 ![clust_ori](image/clust_box.png)
 
@@ -108,15 +108,15 @@ We manually name it from the boxplot above from higher score to lower score as:
 
 We use 'Association rules' algorithm differently for this project. It still have the same parameters like the original association rules algorithm like:
 
-* Left Hand Side (LHS) : It is also called as antecendent, it is the event or action that happened before another. The action in LHS will affect the outcome of RHS
-* Right Hand Side (RHS) : It is also called as consequent.This is the event that happened as the result or effect of what event done in the LHS.
-* Support : An indication of how frequently the item set appears in the dataset. 
-* Confidence : An indication of how often the rule has been found to be true. 
-* Lift : The ratio of the observed support to that expected if X and Y were independent.
+* **Left Hand Side (LHS)** : It is also called as antecendent, it is the event or action that happened before another. The action in LHS will affect the outcome of RHS
+* **Right Hand Side (RHS)** : It is also called as consequent.This is the event that happened as the result or effect of what event done in the LHS.
+* **Support** : An indication of how frequently the item set appears in the dataset. 
+* **Confidence** : An indication of how often the rule has been found to be true. 
+* **Lift** : The ratio of the observed support to that expected if X and Y were independent.
 
-But for this project, the purpose of this model is to what aspect or event that will lead to **'Good Time Management Quality'** or **'Bad Time Management Quality'**. 
+But for this project, the purpose of this model is to detect what aspect or event that will lead to **'Good Time Management Quality'** or **'Bad Time Management Quality'**. 
 
-For achieving the purpose above the RHs is set to a two different group which are 'Good' and 'Bad'. For the LHS, all variable (gender, age, and 12 questions) are used. From the example below, the rules that are used only rules with **1** confidence level, that means if you do that **99.9%** you will have that result.
+For achieving the purpose above the RHS is set to a two different group which are 'Good' and 'Bad'. For the LHS, all variable (gender, age, and 12 questions) are used. From the example below, the rules that are used only rules with **1** confidence level, that means if you do that **99.9%** you will have that result.
 
 #### Bad Time Management Quality
 ![bad_arules](image/bad_arules.png)
@@ -216,4 +216,4 @@ Lastly, I want to provide you with another quote that I like:
 
 > **"The bad news is time flies. The good news is you are the pilot"** <br> -Michael Altshuler
 
-Thank you for reading and use the app. If you have any feedback, feel free to contact me. Cheers to the better us! :)
+Thank you for reading and use the app. If you have any feedback, feel free to contact me. Cheers to the better us! :clinking_glasses:
