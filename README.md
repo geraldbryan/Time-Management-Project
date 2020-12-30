@@ -74,12 +74,11 @@ For the clustering part, we used **K-Prototypes** to determine the time manageme
 
 We use **K-Prototypes** method because the algorithm is similiar with the famous clustering method (K-means), but the advantage of this method is, it can be used for mixed type data which what our data look likes now.
 
-
-Before do the clustering part, we try to determine the number of clusters using the Elbow Method. **Elbow Method** consists of plotting the explained variation as a function of the number of clusters, the number of cluster is on he elbow of the curve.
+Before do clustering part, we try to determine the number of clusters using Elbow Method. **Elbow Method** consists of plotting the explained variation as a function of the number of clusters, the number of cluster is on elbow of the curve.
 
 ![elbow](image/elbow.png)
 
-We decide that there is a sharp elbow of the curve is on number 3. Thus, we set the number of clusters into three time management qualities: 
+From the plot there is a sharp elbow of the curve on number 3. Thus, we set the number of clusters into three time management qualities: 
 
  - Good Time Management Quality
  
@@ -107,23 +106,53 @@ We manually name it from the boxplot above from higher score to lower score as:
 <a name="Arules"></a>
 ## Association Rules 
 
-You must wonder why we use the association rules method into the data. Are there any transactions in this data? doesn't its goal is determining what is the next product that the customer will buy if they already buy one specific item? **Yes, that is true!** We will use that association rules algorithm differently. In this project, association rules determine what aspect leads to a **'Good Time Management Quality'** or **'Bad Time Management Quality.'** If you think it confusing to decide on the transaction data in this dataset, I will tell you it is not, **absolutely not.** We use the row as the transaction or one respondent as one transaction and the twelve questions, gender, and age as the items.
+We use 'Association rules' algorithm differently for this project. It still have the same parameters like the original association rules algorithm like:
+
+* Left Hand Side (LHS) : It is also called as antecendent, it is the event or action that happened before another. The action in LHS will affect the outcome of RHS
+* Right Hand Side (RHS) : It is also called as consequent.This is the event that happened as the result or effect of what event done in the LHS.
+* Support : An indication of how frequently the item set appears in the dataset. 
+* Confidence : An indication of how often the rule has been found to be true. 
+* Lift : The ratio of the observed support to that expected if X and Y were independent.
+
+But for this project, the purpose of this model is to what aspect or event that will lead to **'Good Time Management Quality'** or **'Bad Time Management Quality'**. 
+
+For achieving the purpose above the RHs is set to a two different group which are 'Good' and 'Bad'. For the LHS, all variable (gender, age, and 12 questions) are used. From the example below, the rules that are used only rules with **1** confidence level, that means if you do that **99.9%** you will have that result.
 
 #### Bad Time Management Quality
 ![bad_arules](image/bad_arules.png)
 
-If you try the survey and fill the question shown above, you will produce a **Bad Time Management Quality**. And the plot below is the interactive visualization that you can try in the shiny app.
+From the plot above, we could take the first rule as our example:
+
+* LHS -> X10: Disagree and X17: Disagree
+* RHS -> Cluster: Bad
+* Support : 0.072
+* Confidence : 1
+
+From the result above we try to translate it into a single statement below: 
+
+The probabilty of a person answer X10 **and** X17 with disagree is 0.072. If you are one of them, you will 100% get into cluster **'Bad Time Management Quality'**.
+
+The plot below is the visualization for the table above, it is actually an interactive plot, try it on the [app](https://gerald.shinyapps.io/Time-Management-Indicator/) :wink:
 
 ![bad_arules_vis](image/bad_arules_vis.png)
 
 #### Good Time Management Quality
 ![good_arules](image/good_arules.png)
 
-If you try the survey and fill the question shown above, you will produce Good Time Management Quality. And the plot below is the interactive visualization that you can try in the app!
+How to read the plot above is the same with 'Bad Time Management Quality Table', but we will explain it once more
+
+* LHS -> X6: Strong Disagree and X8: Agree
+* RHS -> Cluster: Good
+* Support : 0.064
+* Confidence : 1
+
+The probabilty of a person answer X6 with strong disagree **and** X8 with agree is 0.064. If you are one of them, you will 100% get into cluster **'Good Time Management Quality'**.
+
+The plot below is also the visualization of the table above,
 
 ![good_arules_vis](image/good_arules_vis.png)
 
-I will not explain more about the association rules algorithms because it is beyond the scope of time management topic. If you want to understand how I use the association rules without transaction datasets, you can see here: [Rpubs by me](https://rpubs.com/geraldbryan_/690426). Overall, we use the association rules because we want to show you what action leads to bad or good time management quality. Then, you can eliminate any actions that will lead to bad time management quality and keep doing the activities that will lead to good time management quality.
+For more understanding about how we use the association rules without transactions and itemset, you can visit this [page](https://rpubs.com/geraldbryan_/690426).
 
 <a name="App"></a>
 ## About Application
@@ -163,7 +192,7 @@ There are three parts to this menu:
 * **Recommendation**
   In the recommendation part, we use the recommendation from the expert (you can see the detail from this [page](https://quickbooks.intuit.com/r/employee-management/time-management-tips/#:~:text=If%20you%20want%20to%20improve%20your%20time%20management,compare%20actual%20time%20spent%20and%20estimated%20time%20spent.)) to make you have the better time manager. There are some example of recommendations or tips like 'create a daily task', 'prioritize your task', and 'avoid multitasking' that will improve your time management quality. 
 * **Question List**
-  The question list in this menu is to support the 'Factor that Impact your Time Management Quality' part. In this part we provide the question descriptions behind hte variable 'X1' through 'X12'.
+  The question list in this menu is to support the 'Factor that Impact your Time Management Quality' part. In this part we provide the question descriptions behind the variable 'X1' through 'X12'.
   
 * **Factor that Impact your Time Management Quality**.  
   In this part, we use the association rules model to encourage you what the answer will bring you to be in a 'Good Time Management Quality' or 'Bad Time Management Quality'. Besides that, it can be used as the recommendation too.
