@@ -100,13 +100,13 @@ We determine the name of the group based on the boxplot of scores according to t
 
 We manually name it from the boxplot above from higher score to lower score as:
 * Group number 2 (has the highest scores) as a group of **'Good Time Management Quality'**. 
-* group number 3 (has score between grou 1 and 3) as a group of **'Normal Time Management Quality.'**
+* Group number 3 (has score between grou 1 and 3) as a group of **'Normal Time Management Quality.'**
 * Group number 1 (has the lowest scores) as a group of **'Bad Time Management Quality'**.
 
 <a name="Arules"></a>
 ## Association Rules 
 
-We use 'Association rules' algorithm differently for this project. It still have the same parameters like the original association rules algorithm like:
+We use 'Association rules' algorithm differently for this project. It still have the same parameters of the original association rules algorithm like:
 
 * **Left Hand Side (LHS)** : It is also called as antecendent, it is the event or action that happened before another. The action in LHS will affect the outcome of RHS
 * **Right Hand Side (RHS)** : It is also called as consequent.This is the event that happened as the result or effect of what event done in the LHS.
@@ -116,7 +116,7 @@ We use 'Association rules' algorithm differently for this project. It still have
 
 But for this project, the purpose of this model is to detect what aspect or event that will lead to **'Good Time Management Quality'** or **'Bad Time Management Quality'**. 
 
-For achieving the purpose above the RHS is set to a two different group which are 'Good' and 'Bad'. For the LHS, all variable (gender, age, and 12 questions) are used. From the example below, the rules that are used only rules with **1** confidence level, that means if you do that **99.9%** you will have that result.
+For achieving the purpose above the RHS is set to a two different group which are 'Good' and 'Bad'. For the LHS, all variable (gender, age, and 12 questions) are used. From the example below, the rules that are used only rules with **1** confidence level, that means if you do that **99.9%** you will have that result from the RHS.
 
 #### Bad Time Management Quality
 ![bad_arules](image/bad_arules.png)
@@ -139,7 +139,7 @@ The plot below is the visualization for the table above, it is actually an inter
 #### Good Time Management Quality
 ![good_arules](image/good_arules.png)
 
-How to read the plot above is the same with 'Bad Time Management Quality Table', but we will explain it once more
+How to read the plot above is the same with 'Bad Time Management Quality' table, but we will explain it once more
 
 * LHS -> X6: Strong Disagree and X8: Agree
 * RHS -> Cluster: Good
@@ -189,12 +189,12 @@ After finishing, fill out the twelve questions:
 ![recommendation](image/recommendation.png)
 
 There are three parts to this menu:
-* **Recommendation**
+* **Recommendation** <br>
   In the recommendation part, we use the recommendation from the expert (you can see the detail from this [page](https://quickbooks.intuit.com/r/employee-management/time-management-tips/#:~:text=If%20you%20want%20to%20improve%20your%20time%20management,compare%20actual%20time%20spent%20and%20estimated%20time%20spent.)) to make you have the better time manager. There are some example of recommendations or tips like 'create a daily task', 'prioritize your task', and 'avoid multitasking' that will improve your time management quality. 
-* **Question List**
+* **Question List**<br>
   The question list in this menu is to support the 'Factor that Impact your Time Management Quality' part. In this part we provide the question descriptions behind the variable 'X1' through 'X12'.
   
-* **Factor that Impact your Time Management Quality**.  
+* **Factor that Impact your Time Management Quality**.  <br>
   In this part, we use the association rules model to encourage you what the answer will bring you to be in a 'Good Time Management Quality' or 'Bad Time Management Quality'. Besides that, it can be used as the recommendation too.
   
   This is how you read the result : In the 'LHS' column is what the action that will trigger you to get the result in 'RHS' column.  
@@ -206,14 +206,17 @@ There are three parts to this menu:
   4. Implement it in real life! (It is a must :wink:)
 
 #### Statistics
-In this menu we divide it into two big menu which are [clustering](#Cluster) and [Association rules](#Arules). It consist all of what we have been explained in the clustering and Association rules part.
+In this menu we divide it into two big menu which are 'clustering' and 'association rules'. It consist all of what we have been explained in the [clustering](#Cluster) and [Association rules](#Arules)part.
 
 ## Enjoy!
-I do not want you to take more time to read this, so just head to the shiny app, take the survey, and most important, improve your time management quality no matter what groups you belong to based on our survey.
-
+I do not want you to take more time to read this, so just head to the shiny app, take the survey, and most important, improve your time management quality no matter what groups you belong to.
 
 Lastly, I want to provide you with another quote that I like:
 
 > **"The bad news is time flies. The good news is you are the pilot"** <br> -Michael Altshuler
 
-Thank you for reading and use the app. If you have any feedback, feel free to contact me. Cheers to the better us! :clinking_glasses:
+Thank you for reading and use the app. :smile:
+
+If you have any feedback, feel free to contact me. 
+
+Cheers to the better us! :clinking_glasses:
