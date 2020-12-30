@@ -116,7 +116,7 @@ We use 'Association rules' algorithm differently for this project. It still have
 
 But for this project, the purpose of this model is to detect what aspect or event that will lead to **'Good Time Management Quality'** or **'Bad Time Management Quality'**. 
 
-For achieving the purpose above the RHS is set to a two different group which are 'Good' and 'Bad'. For the LHS, all variable (gender, age, and 12 questions) are used. From the example below, the rules that are used only rules with **1** confidence level, that means if you do that **99.9%** you will have that result from the RHS.
+For achieving the purpose above the RHS is set to a two different group which are 'Good' and 'Bad'. For the LHS, all variable (gender, age, and 12 questions) are used. From the example below, the rules that are used only rules with **1** confidence level, that means if you do that, most likely you will have that result from the RHS.
 
 #### Bad Time Management Quality
 ![bad_arules](image/bad_arules.png)
@@ -130,7 +130,7 @@ From the plot above, we could take the first rule as our example:
 
 From the result above we try to translate it into a single statement below: 
 
-The probabilty of a person answer X10 **and** X17 with disagree is 0.072. If you are one of them, you will 100% get into cluster **'Bad Time Management Quality'**.
+The probabilty of a person answer X10 (*"You will plan your activities day to day"*) **and** X17 (*"You know how much time you spend on each of the work you do"*) with disagree is 0.072. If you are one of them, you will 100% get into cluster **'Bad Time Management Quality'**.
 
 The plot below is the visualization for the table above, it is actually an interactive plot, try it on the [app](https://gerald.shinyapps.io/Time-Management-Indicator/) :wink:
 
@@ -146,7 +146,7 @@ How to read the plot above is the same with 'Bad Time Management Quality' table,
 * Support : 0.064
 * Confidence : 1
 
-The probabilty of a person answer X6 with strong disagree **and** X8 with agree is 0.064. If you are one of them, you will 100% get into cluster **'Good Time Management Quality'**.
+The probability of a person answer X6 (*"You often feel that your life is aimless, with no definite purpose"*) with strong disagree **and** X8 (*"Once you've started an activity, you persist at it until you've completed it"*) with agree is 0.064. If you are one of them, you will 100% get into cluster **'Good Time Management Quality'**.
 
 The plot below is also the visualization of the table above,
 
