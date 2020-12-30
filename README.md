@@ -206,7 +206,7 @@ There are three parts to this menu:
   4. Implement it in real life! (It is a must :wink:)
 
 #### Statistics
-In this menu we divide it into two big menu which are 'clustering' and 'association rules'. It consist all of what we have been explained in the [clustering](#Cluster) and [Association rules](#Arules)part.
+In this menu we divide it into two big menu which are 'clustering' and 'association rules'. It consist all of what we have been explained in the [clustering](#Cluster) and [Association rules](#Arules) part.
 
 ## Enjoy!
 I do not want you to take more time to read this, so just head to the shiny app, take the survey, and most important, improve your time management quality no matter what groups you belong to.
